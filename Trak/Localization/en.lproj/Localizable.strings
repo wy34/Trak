@@ -1,0 +1,144 @@
+/*
+  Localizeable.strings
+  TrackingApp
+
+  Created by William Yeung on 1/13/21.
+  
+*/
+
+// TimerDistanceView
+"START ACTIVITY" = "START ACTIVITY";
+"DURATION" = "DURATION";
+"DISTANCE (MI)" = "DISTANCE (MI)";
+"METERS" = "METERS";
+"MILES" = "MILES";
+
+// ActivityHistoryVC
+"Distance History" = "Distance History";
+
+// TabBar
+"Map" = "Map";
+"History" = "History";
+"Settings" = "Settings";
+"New" = "New";
+
+// Maps
+"Start" = "Start";
+"End" = "End";
+"STANDARD" = "STANDARD";
+"HYBRID" = "HYBRID";
+"SATELLITE" = "SATELLITE";
+
+// Settings
+"Interface" = "Interface";
+"Security" = "Security";
+"App" = "App";
+"Language" = "Language";
+"Trak, Version 1.0" = "Trak, Version 1.0";
+
+// Profile
+"Profile" = "Profile";
+"Your Name" = "Your Name";
+"Edit Profile" = "Edit Profile";
+"Tap to Edit" = "Tap to Edit";
+"Photo Library" = "Photo Library";
+"Camera" = "Camera";
+"Edit Name" = "Edit Name";
+
+// Dark Mode
+"Dark Mode" = "Dark Mode";
+"Automatic" = "Automatic";
+"Light Mode" = "Light Mode";
+"Select Manually" = "Select Manually";
+"When enabled, Trak will match your iOS appearance." = "When enabled, Trak will match your iOS appearance.";
+
+// Security
+"Face/Touch ID" = "Face/Touch ID";
+
+// Language
+"How to Change App Language" = "How to Change App Language";
+"Method 1: System-wide Change" = "Method 1: System-wide Change";
+"1. Open the Settings App" = "1. Open the Settings App";
+"2. General -> Language & Region" = "2. General -> Language & Region";
+"3. Change Preferred iPhone Language" = "3. Change Preferred iPhone Language";
+"OR" = "OR";
+"Method 2: App-only Change" = "Method 2: App-only Change";
+"1. Open the Settings App" = "1. Open the Settings App";
+"2. Scroll down until you find Trak" = "2. Scroll down until you find Trak";
+"3. Change the Preferred Language" = "3. Change the Preferred Language";
+"Tip: Click shortcut link below" = "Tip: Click shortcut link below";
+"Open App Settings" = "Open App Settings";
+
+// App
+"Clear History" = "Clear History";
+"Deleting History..." = "Deleting History...";
+
+// SummaryVC
+"Cancel" = "Cancel";
+"Edit Mode" = "Edit Mode";
+"MILES (active)" = "MILES (active)";
+"TIME (active)" = "TIME (active)";
+"MILES (paused)" = "MILES (paused)";
+"TIME (paused)" = "TIME (paused)";
+"Activity Type:  " = "Activity Type:  ";
+"Delete" = "Delete";
+"Edit" = "Edit";
+"Share" = "Share";
+"SHARE" = "SHARE";
+"SAVE ACTIVITY" = "SAVE ACTIVITY";
+"DELETE ACTIVITY" = "DELETE ACTIVITY";
+"Añade una nota..." = "Añade una nota...";
+"Characters left: " = "Characters left: ";
+"PAUSE" = "PAUSE";
+"RESUME" = "RESUME";
+"HOLD TO FINISH" = "HOLD TO FINISH";
+"START NEW ACTIVITY" = "START NEW ACTIVITY";
+"Add a note..." = "Add a note...";
+"No Note" = "No Note";
+"Activity Options" = "Activity Options";
+
+// ShareVC
+"Dismiss" = "Dismiss";
+"MESSAGE" = "MESSAGE";
+"DOWNLOAD" = "DOWNLOAD";
+"MORE" = "MORE";
+"User does not have the messages app." = "User does not have the messages app.";
+"Save Error" = "Save Error";
+"OK" = "OK";
+"Saved" = "Saved";
+"Your route snapshot has been downloaded to your photo library!" = "TYour route snapshot has been downloaded to your photo library!";
+"Camera Options" = "Camera Options";
+
+// HistoryVC
+"No Activities" = "No Activities";
+
+// Alerts
+"Clear Activity History" = "Clear Activity History";
+"Are you sure you want to delete your activity history? This cannot be undone." = "Are you sure you want to delete your activity history? This cannot be undone.";
+"Cancel" = "Cancel";
+"Yes" = "Yes";
+"No" = "No";
+"Delete Activity" = "Delete Activity";
+"Do you want to delete this activity? This cannot be undone." = "Do you want to delete this activity? This cannot be undone.";
+"Save" = "Save";
+
+
+// Onboarding & LocationRequest
+"Let's Get Started!" = "Let's Get Started!";
+"Please enable location services so that we can track your activities." = "Please enable location services so that we can track your activities.";
+"Next" = "Next";
+"Allow" = "Allow";
+"Welcome" = "Welcome";
+"Measure" = "Measure";
+"Easy" = "Easy";
+"Allow Your Location" = "Allow Your Location";
+"Trak is an application that allows you to measure common, distance-related activites." = "TTrak is an application that allows you to measure common, distance-related activites.";
+"Whether you are exercising or just driving around, Trak records how far and how long you've travelled." = "Whether you are exercising or just driving around, Trak records how far and how long you've travelled.";
+"Just start a new activity, and Trak will begin recording your elapsed distance and time." = "Just start a new activity, and Trak will begin recording your elapsed distance and time.";
+
+// TotalStatsView
+"Total Statistics" = "Total Statistics";
+"Activities Performed" = "Activities Performed";
+"Distance" = "Distance";
+"Activity" = "Activity";
+"Activities" = "Activities";

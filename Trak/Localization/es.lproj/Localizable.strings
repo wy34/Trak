@@ -1,0 +1,147 @@
+/*
+  Localizeable.strings
+  TrackingApp
+
+  Created by William Yeung on 1/13/21.
+  
+*/
+
+
+
+// TimerDistanceView
+"START ACTIVITY" = "INICIAR LA ACTIVIDAD";
+"DURATION" = "DURACIÓN";
+"DISTANCE (MI)" = "DISTANCIA (MI)";
+"METERS" = "METROS";
+"MILES" = "MILLAS";
+
+// ActivityHistoryVC
+"Distance History" = "Historia de la distancia";
+
+// TabBar
+"Map" = "Mapa";
+"History" = "Historia";
+"Settings" = "Ajustes";
+"New" = "Nuevo";
+
+// Maps
+"Start" = "Inicie";
+"End" = "Finalizar";
+"STANDARD" = "ESTÁNDAR";
+"HYBRID" = "HÍBRIDO";
+"SATELLITE" = "SATÉLITE";
+
+// Settings
+"Interface" = "Interfaz";
+"Security" = "Seguridad";
+"App" = "Aplicación";
+"Language" = "Idioma";
+"Trak, Version 1.0" = "Trak, versión 1.0";
+
+// Profile
+"Profile" = "Perfil";
+"Your Name" = "Su nombre";
+"Edit Profile" = "Editar perfil";
+"Tap to Edit" = "Pulse para editar";
+"Photo Library" = "Biblioteca fotográfica";
+"Camera" = "Cámara";
+"Edit Name" = "Editar nombre";
+
+// Dark Mode
+"Dark Mode" = "Modo oscuro";
+"Automatic" = "Automático";
+"Light Mode" = "Modo de luz";
+"Select Manually" = "Seleccionar manualmente";
+"When enabled, Trak will match your iOS appearance." = "Cuando esté activado, Trak se ajustará a la apariencia de tu iOS.";
+
+// Security
+"Face/Touch ID" = "Cara/Toca ID";
+
+// Language
+"How to Change App Language" = "Cómo cambiar el idioma de la aplicación";
+"Method 1: System-wide Change" = "Método 1: Cambio en todo el sistema";
+"1. Open the Settings App" = "1. Abrir la aplicación de ajustes";
+"2. General -> Language & Region" = "2. General -> Idioma y región";
+"3. Change Preferred iPhone Language" = "3. Cambiar el idioma preferido del iPhone";
+"OR" = "O";
+"Method 2: App-only Change" = "Método 2: Cambio en la aplicación";
+"1. Open the Settings App" = "1. Abrir la aplicación de ajustes";
+"2. Scroll down until you find Trak" = "2. Desplácese hacia abajo hasta encontrar Trak";
+"3. Change the Preferred Language" = "3. Cambiar el idioma preferido";
+"Tip: Click shortcut link below" = "Consejo: Haga clic en el siguiente enlace de acceso directo";
+"Open App Settings" = "Abrir la configuración de la aplicación";
+
+// App
+"Clear History" = "Historia clara";
+"Deleting History..." = "Borrar la historia...";
+
+// SummaryVC
+"Cancel" = "Cancelar";
+"Edit Mode" = "Modo de edición";
+"MILES (active)" = "MILLAS (activo)";
+"TIME (active)" = "TIEMPO (activo)";
+"MILES (paused)" = "MILLAS (pausa)";
+"TIME (paused)" = "TIEMPO (pausa)";
+"Activity Type:  " = "Tipo de actividad:  ";
+"Delete" = "Eliminar";
+"Edit" = "Edita";
+"Share" = "Comparte";
+"SHARE" = "COMPARTE";
+"SAVE ACTIVITY" = "SALVAR LA ACTIVIDAD";
+"DELETE ACTIVITY" = "ELIMINAR LA ACTIVIDAD";
+"Add a note..." = "Añade una nota...";
+"Characters left: " = "Quedan personajes: ";
+"PAUSE" = "PAUSA";
+"RESUME" = "RESUMEN";
+"HOLD TO FINISH" = "AGUANTAR HASTA EL FINAL";
+"START NEW ACTIVITY" = "INICIAR UNA NUEVA ACTIVIDAD";
+"Add a note..." = "Agregar una nota...";
+"No Note" = "No hay Nota";
+"Activity Options" = "Opciones de actividad";
+
+// ShareVC
+"Dismiss" = "Descartar";
+"MESSAGE" = "MENSAJE";
+"DOWNLOAD" = "DESCARGAR";
+"MORE" = "MÁS";
+"User does not have the messages app." = "El usuario no tiene la aplicación de mensajes.";
+"Save Error" = "Guardar error";
+"OK" = "OK";
+"Saved" = "Guardado";
+"Your route snapshot has been downloaded to your photo library!" = "Tu instantánea de la ruta se ha descargado en tu biblioteca de fotos.";
+"Camera Options" = "Opciones de la cámara";
+
+// HistoryVC
+"No Activities" = "No hay actividades";
+
+// Alerts
+"Clear Activity History" = "Borrar el historial de actividades";
+"Are you sure you want to delete your activity history? This cannot be undone." = "¿Estás seguro de que quieres borrar tu historial de actividades? Esto no se puede deshacer.";
+"Cancel" = "Cancelar";
+"Yes" = "Sí";
+"No" = "No";
+"Delete Activity" = "Eliminar la actividad";
+"Do you want to delete this activity? This cannot be undone." = "¿Desea eliminar esta actividad? Esto no se puede deshacer.";
+"Save" = "Guardar";
+
+
+// Onboarding & LocationRequest
+"Let's Get Started!" = "¡Empecemos!";
+"Please enable location services so that we can track your activities." = "Por favor, active los servicios de localización para que podamos seguir sus actividades.";
+"Next" = "Siguiente";
+"Allow" = "Permitir";
+"Welcome" = "Bienvenido";
+"Measure" = "Medida";
+"Easy" = "Fácil";
+"Allow Your Location" = "Permita su ubicación";
+"Trak is an application that allows you to measure common, distance-related activites." = "Trak es una aplicación que permite medir actividades comunes relacionadas con la distancia.";
+"Whether you are exercising or just driving around, Trak records how far and how long you've travelled." = "Tanto si haces ejercicio como si simplemente conduces, Trak registra la distancia y el tiempo que has recorrido.";
+"Just start a new activity, and Trak will begin recording your elapsed distance and time." = "Sólo tienes que iniciar una nueva actividad y Trak empezará a registrar tu distancia y tiempo transcurridos.";
+
+// TotalStatsView
+"Total Statistics" = "Estadísticas totales";
+"Activities Performed" = "Actividades realizadas";
+"Distance" = "Distancia";
+"Activity" = "Actividad";
+"Activities" = "Actividades";
+
