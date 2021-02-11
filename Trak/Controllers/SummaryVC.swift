@@ -132,15 +132,15 @@ class SummaryViewController: UIViewController {
         return button
     }()
     
-    private let closeBtn: UIButton = {
+    private let deleteBtn: UIButton = {
         let button = UIButton.createSummaryViewMainButtons(withTitle: "DELETE ACTIVITY".localized(), bgColor: .clear, andFont: UIFont.bold11)
         button.setTitleColor(.systemRed, for: .normal)
-        button.addTarget(self, action: #selector(closeShareView), for: .touchUpInside)
+        button.addTarget(self, action: #selector(deleteActivity), for: .touchUpInside)
         return button
     }()
 
     private lazy var btnStack: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [closeBtn, saveBtn, shareBtn])
+        let stack = UIStackView(arrangedSubviews: [deleteBtn, saveBtn, shareBtn])
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.spacing = -2.5
@@ -261,7 +261,7 @@ class SummaryViewController: UIViewController {
                 characterCountLabel.isHidden = true
                 saveBtn.isHidden = true
                 shareBtn.isHidden = false
-                closeBtn.alpha = 0
+                deleteBtn.alpha = 0
                 activityTypeMenu.isHidden = true
                 iconLabel.isHidden = false
             }
@@ -315,7 +315,6 @@ class SummaryViewController: UIViewController {
         guard let activitySession = self.activitySession else { return }
         if let alreadySaved = self.alreadySaved {
             if alreadySaved {
-                CoreDataManager.shared.deleteActivity(activity: activitySession)
                 self.navigationController?.popViewController(animated: true)
                 if let index = self.activityHistoryVC?.activities.firstIndex(where: { $0.id == self.activitySession?.id }) {
                     self.activityHistoryVC?.activities.remove(at: index)
@@ -324,6 +323,7 @@ class SummaryViewController: UIViewController {
             } else {
                 self.dismiss(animated: true, completion: nil)
             }
+            CoreDataManager.shared.deleteActivity(activity: activitySession)
         }
     }
     
@@ -390,7 +390,7 @@ class SummaryViewController: UIViewController {
         
         saveBtn.isHidden = true
         shareBtn.isHidden = false
-        closeBtn.alpha = 0
+        deleteBtn.alpha = 0
         
         activityTypeMenu.isHidden = true
         iconLabel.isHidden = false
@@ -455,9 +455,9 @@ class SummaryViewController: UIViewController {
         }
     }
     
-    @objc func closeShareView() {
-        guard let activitySession = activitySession else { return }
-        CoreDataManager.shared.deleteActivity(activity: activitySession)
+    @objc func deleteActivity() {
+//        guard let activitySession = activitySession else { return }
+//        CoreDataManager.shared.deleteActivity(activity: activitySession)
         dismissKeyboard()
         discardAlert()
     }

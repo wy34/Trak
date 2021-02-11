@@ -2,23 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Allow access to camera in order to take a picture</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Do you want to enable Face Id to better secure your information?</string>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>We need access to your music library in order to play music during an activity.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location in order to display your activity distance and routes.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to your photo library in order to save activty screenshots.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>TommySoftMedium.otf</string>
-		<string>TommySoftRegular.otf</string>
-		<string>TommySoftLight.otf</string>
-		<string>TommySoftBold.otf</string>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -34,9 +17,26 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need access to your music library in order to play music during an activity.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow access to camera in order to take a picture</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Do you want to enable Face Id to better secure your information?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location in order to display your activity distance and routes.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library in order to save activty screenshots.</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>TommySoftMedium.otf</string>
+		<string>TommySoftRegular.otf</string>
+		<string>TommySoftLight.otf</string>
+		<string>TommySoftBold.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
