@@ -20,7 +20,7 @@ class SlideOutMusicView: UIView {
     
     private let songCoverImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "musicNotePlaceholder")
+        iv.image = Assets.musicNotePH
         iv.backgroundColor = .systemGray3
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 10
@@ -56,7 +56,7 @@ class SlideOutMusicView: UIView {
     
     private let scrubber: UISlider = {
         let slider = UISlider()
-        let thumbImage = UIImage(systemName: "circlebadge.fill")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+        let thumbImage = SFSymbols.circleBadge.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
         slider.setThumbImage(thumbImage, for: .normal)
         slider.addTarget(self, action: #selector(beginSeeking(sender:)), for: .valueChanged)
         slider.addTarget(self, action: #selector(endSeeking(sender:)), for: .touchUpInside)
@@ -72,14 +72,14 @@ class SlideOutMusicView: UIView {
     private lazy var volumeSlider: UISlider = {
         let slider = UISlider()
         slider.value = AVAudioSession.sharedInstance().outputVolume
-        let thumbImage = UIImage(systemName: "circlebadge.fill")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+        let thumbImage = SFSymbols.circleBadge.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
         slider.setThumbImage(thumbImage, for: .normal)
         slider.addTarget(self, action: #selector(didChangeVolume(sender:)), for: .valueChanged)
         return slider
     }()
     
-    private let volumeDown = UIImageView.createVolumeImageViews(withImage: "speaker.fill")
-    private let volumeUp = UIImageView.createVolumeImageViews(withImage: "speaker.wave.3.fill")
+    private let volumeDown = UIImageView.createVolumeImageViews(withImage: SFSymbols.volumeDown)
+    private let volumeUp = UIImageView.createVolumeImageViews(withImage: SFSymbols.volumeUp)
     
     private lazy var volumeStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [volumeDown, volumeSlider, volumeUp])
@@ -184,9 +184,9 @@ class SlideOutMusicView: UIView {
         let config = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: UIScreen.main.bounds.height <= 736 ? 18 : 24))
         
         if musicPlayer.playbackState == .paused {
-            playPauseButton.setImage(UIImage(systemName: "play.fill", withConfiguration: config), for: .normal)
+            playPauseButton.setImage(SFSymbols.play.applyingSymbolConfiguration(config), for: .normal)
         } else if musicPlayer.playbackState == .playing {
-            playPauseButton.setImage(UIImage(systemName: "pause.fill", withConfiguration: config), for: .normal)
+            playPauseButton.setImage(SFSymbols.pause.applyingSymbolConfiguration(config), for: .normal)
         }
     }
     

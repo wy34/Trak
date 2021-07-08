@@ -49,7 +49,7 @@ struct TotalStatsView: View {
                 }
                 Spacer()
                 HStack {
-                    Image(systemName: "chart.bar.xaxis")
+                    Image(uiImage: SFSymbols.chart)
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()

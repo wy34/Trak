@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIButton {
-    static func createControlButtons(withImage image: String? = nil, withTitle title: String? = nil, andTintColor tc: UIColor) -> UIButton {
+    static func createControlButtons(withImage image: UIImage? = nil, withTitle title: String? = nil, andTintColor tc: UIColor) -> UIButton {
         let button = UIButton(type: .system)
         
         if let title = title {
@@ -16,7 +16,7 @@ extension UIButton {
         }
         
         if let image = image {
-            button.setImage(UIImage(systemName: image), for: .normal)
+            button.setImage(image, for: .normal)
         }
         
         button.tintColor = tc
@@ -63,7 +63,7 @@ extension UIButton {
         return button
     }
     
-    static func createMapButtons(withImage image: String) -> UIButton {
+    static func createMapButtons(withImage image: UIImage?) -> UIButton {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.StandardDarkMode
         button.layer.shadowColor = UIColor(white: 0.25, alpha: 0.75).cgColor
@@ -72,7 +72,7 @@ extension UIButton {
         button.layer.shadowOffset = CGSize(width: 2, height: 2)
         button.layer.cornerRadius = 12
         button.tintColor = UIColor.InvertedDarkMode
-        button.setImage(UIImage(systemName: image), for: .normal)
+        button.setImage(image, for: .normal)
         return button
     }
     
@@ -91,7 +91,7 @@ extension UIButton {
         return button
     }
     
-    static func createScrollButtons(withImage img: String, andTag tag: Int) -> UIButton {
+    static func createScrollButtons(withImage img: UIImage, andTag tag: Int) -> UIButton {
         let button = UIButton.createControlButtons(withImage: img, andTintColor: UIColor.InvertedDarkMode.withAlphaComponent(0.15))
         button.tag = tag
         button.isHidden = tag == 1 ? true : false

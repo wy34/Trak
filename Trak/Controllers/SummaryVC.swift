@@ -71,7 +71,7 @@ class SummaryViewController: UIViewController {
     private let moreInfoView = UIView.createView(withBgColor: .black, alpha: 0.5, andCornerRadius: 5)
     
     private let expandMapButton: UIButton = {
-        let button = UIButton.createControlButtons(withImage: "arrow.up.left.and.down.right.and.arrow.up.right.and.down.left", andTintColor: .white)
+        let button = UIButton.createControlButtons(withImage: SFSymbols.expandArrows, andTintColor: .white)
         button.addTarget(self, action: #selector(expandSnapshotMap), for: .touchUpInside)
         return button
     }()
@@ -116,8 +116,8 @@ class SummaryViewController: UIViewController {
         return cv
     }()
     
-    private let scrollLeftBtn = UIButton.createScrollButtons(withImage: "arrowtriangle.left.fill", andTag: 1)
-    private let scrollRightBtn = UIButton.createScrollButtons(withImage: "arrowtriangle.right.fill", andTag: 2)
+    private let scrollLeftBtn = UIButton.createScrollButtons(withImage: SFSymbols.triangleLeft, andTag: 1)
+    private let scrollRightBtn = UIButton.createScrollButtons(withImage: SFSymbols.triangleRight, andTag: 2)
     
     private let saveBtn: UIButton = {
         let button = UIButton.createSummaryViewMainButtons(withTitle: "SAVE ACTIVITY".localized(), bgColor: .systemGreen, andFont: UIFont.bold17)
@@ -164,7 +164,7 @@ class SummaryViewController: UIViewController {
         tv.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.2524614726)
         tv.layer.cornerRadius = 5
         tv.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.medium15!)
-        tv.leftImage = UIImage(systemName: "pencil")
+        tv.leftImage = SFSymbols.pencil
         tv.delegate = self
         tv.isScrollEnabled = false
         return tv
@@ -253,7 +253,7 @@ class SummaryViewController: UIViewController {
     private func checkIfAlreadySaved() {
         if let alreadySaved = alreadySaved {
             if alreadySaved {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action:  #selector(handleMoreButton))
+                navigationItem.rightBarButtonItem = UIBarButtonItem(image: SFSymbols.ellipsis, style: .plain, target: self, action:  #selector(handleMoreButton))
                 uneditableTextView.text = activitySession?.activityNote
                 uneditableTextView.isHidden = false
                 editableTextView.isHidden = true
@@ -296,7 +296,8 @@ class SummaryViewController: UIViewController {
     }
     
     private func discardAlert() {
-        let alert = UIAlertController(title: "Delete Activity".localized(), message: "Do you want to delete this activity? This cannot be undone.".localized(), preferredStyle: .alert)
+        let alertTitle = "Do you want to delete this activity? This cannot be undone."
+        let alert = UIAlertController(title: "Delete Activity".localized(), message: alertTitle.localized(), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { (_) in
             self.discardActivity()
         }))
@@ -383,7 +384,7 @@ class SummaryViewController: UIViewController {
         
         if alreadySaved {
             navigationItem.title = activitySessionVM?.formattedDateTimeString
-            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action:  #selector(handleMoreButton))
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: SFSymbols.ellipsis, style: .plain, target: self, action:  #selector(handleMoreButton))
             activitySession.activityNote = note == "" ? "No Note" : note
             uneditableTextView.text = activitySession.activityNote
             dismissKeyboard()
@@ -433,7 +434,7 @@ class SummaryViewController: UIViewController {
     }
     
     @objc func handleCancelEdit() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action:  #selector(handleMoreButton))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: SFSymbols.ellipsis, style: .plain, target: self, action:  #selector(handleMoreButton))
         uneditableTextView.text = activitySession?.activityNote
         uneditableTextView.isHidden = false
         editableTextView.isHidden = true

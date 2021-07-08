@@ -18,7 +18,7 @@ class ChangeProfileVC: UIViewController {
         let btn = UIButton(type: .custom)
         btn.contentMode = .scaleAspectFill
         let largeConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 130))
-        btn.setImage(UIImage(systemName: "person.circle", withConfiguration: largeConfig), for: .normal)
+        btn.setImage(SFSymbols.person.applyingSymbolConfiguration(largeConfig), for: .normal)
         btn.clipsToBounds = true
         btn.addTarget(self, action: #selector(openOptionsMenu), for: .touchUpInside)
         return btn

@@ -12,7 +12,7 @@ import CoreLocation
 struct OnboardingItem {
     var title: String
     var description: String
-    var imageName: String
+    var image: UIImage
 }
 
 class OnboardingVC: UIViewController {
@@ -20,9 +20,9 @@ class OnboardingVC: UIViewController {
     var activityMapVC: ActivityMapVC!
     
     var onboardingItems = [
-        OnboardingItem(title: "Welcome".localized(), description: "Trak is an application that allows you to measure common, distance-related activites.".localized(), imageName: "road"),
-        OnboardingItem(title: "Measure".localized(), description: "Whether you are exercising or just driving around, Trak records how far and how long you've travelled.".localized(), imageName: "walk"),
-        OnboardingItem(title: "Easy".localized(), description: "Just start a new activity, and Trak will begin recording your elapsed distance and time.".localized(), imageName: "finish")
+        OnboardingItem(title: "Welcome".localized(), description: "Trak is an application that allows you to measure common, distance-related activites.".localized(), image: Assets.road),
+        OnboardingItem(title: "Measure".localized(), description: "Whether you are exercising or just driving around, Trak records how far and how long you've travelled.".localized(), image: Assets.walk),
+        OnboardingItem(title: "Easy".localized(), description: "Just start a new activity, and Trak will begin recording your elapsed distance and time.".localized(), image: Assets.finish)
     ]
     
     // MARK: - Views

@@ -9,7 +9,7 @@ import UIKit
 
 struct Option<T> {
     let title: T
-    let image: String
+    let image: UIImage
 }
 
 enum Action: String {

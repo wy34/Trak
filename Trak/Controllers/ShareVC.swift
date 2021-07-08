@@ -131,7 +131,8 @@ class ShareViewController: UIViewController {
             ac.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: nil))
             present(ac, animated: true)
         } else {
-            let ac = UIAlertController(title: "Saved".localized(), message: "Your route snapshot has been downloaded to your photo library!".localized(), preferredStyle: .alert)
+            let alertMessage = "Your route snapshot has been downloaded to your photo library!"
+            let ac = UIAlertController(title: "Saved".localized(), message: alertMessage.localized(), preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: nil))
             present(ac, animated: true)
         }

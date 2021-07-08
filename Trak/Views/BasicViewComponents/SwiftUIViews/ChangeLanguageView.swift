@@ -64,7 +64,7 @@ struct ChangeLanguageView: View {
                                 .font(.custom(TrakFontStyle.medium.rawValue, size: 16, relativeTo: .body))
                                 .minimumScaleFactor(0.5)
                             Spacer()
-                            Image(systemName: "arrow.up.forward.app")
+                            Image(uiImage: SFSymbols.diagonalArrowUp)
                         }
                         .foregroundColor(Color(UIColor.InvertedDarkMode))
                         .padding(.horizontal, 10)

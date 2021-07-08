@@ -13,7 +13,7 @@ class OptionCell: UITableViewCell {
         didSet {
             guard let action = moreAction else { return }
             nameLabel.text = action.title.rawValue.localized()
-            iconImageView.image = UIImage(systemName: action.image)
+            iconImageView.image = action.image
         }
     }
     
@@ -21,7 +21,7 @@ class OptionCell: UITableViewCell {
         didSet {
             guard let action = camerAction else { return }
             nameLabel.text = action.title == .camera ? "Camera".localized() : "Photo Library".localized()
-            iconImageView.image = UIImage(systemName: action.image)
+            iconImageView.image = action.image
         }
     }
     

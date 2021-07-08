@@ -25,7 +25,7 @@ class BaseLocationRequestView: UIView {
     // MARK: - Views
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
-        iv.image = UIImage(named: "route")
+        iv.image = Assets.route
         iv.contentMode = .scaleAspectFit
         return iv
     }()

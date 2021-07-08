@@ -38,9 +38,9 @@ class RootTabBarController: UITabBarController {
     
     // MARK: - Helpers
     private func setupTabBar() {
-        mapVC.tabBarItem = UITabBarItem(title: "Map".localized(), image: UIImage(systemName: "map"), tag: 0)
+        mapVC.tabBarItem = UITabBarItem(title: "Map".localized(), image: SFSymbols.map, tag: 0)
                 
-        historyVC.tabBarItem = UITabBarItem(title: "History".localized(), image: UIImage(systemName: "list.bullet"), tag: 1)
+        historyVC.tabBarItem = UITabBarItem(title: "History".localized(), image: SFSymbols.bulletList, tag: 1)
 
         viewControllers = [mapVC, UINavigationController(rootViewController: historyVC), UIViewController()]
         tabBarController?.tabBar.isTranslucent = false
@@ -60,7 +60,8 @@ class RootTabBarController: UITabBarController {
         var error: NSError?
         
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
-            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: "Do you want to enable Face Id to better secure your information?") { [weak self] (success, authError) in
+            let localizedReason = "Do you want to enable Face Id to better secure your information?"
+            context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: localizedReason) { [weak self] (success, authError) in
                 DispatchQueue.main.async {
                     if success {
                         Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (_) in

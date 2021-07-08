@@ -9,6 +9,6 @@ import UIKit
 
 struct SettingsOption {
     let name: String
-    let image: String
+    let image: UIImage
     let color: UIColor
 }

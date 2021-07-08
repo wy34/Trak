@@ -71,7 +71,7 @@ class TimerDistanceView: UIView {
     
     // MARK: - Helpers
     private func configureUI() {
-        backgroundColor = UIColor(named: "StandardDarkMode")
+        backgroundColor = UIColor.StandardDarkMode
         layer.shadowColor = UIColor(white: 0.25, alpha: 0.5).cgColor
         layer.shadowOpacity = 1
         layer.shadowRadius = 5

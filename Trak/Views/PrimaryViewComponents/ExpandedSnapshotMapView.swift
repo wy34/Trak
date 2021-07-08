@@ -32,7 +32,7 @@ class ExpandedSnapshotMapView: UIView {
     private let blueBorderLine = UIView.createBlueBorderLine()
     
     private let closeButton: UIButton = {
-        let button = UIButton.createControlButtons(withImage: "xmark.circle", withTitle: nil, andTintColor: UIColor.InvertedDarkMode)
+        let button = UIButton.createControlButtons(withImage: SFSymbols.xmarkCircle, withTitle: nil, andTintColor: UIColor.InvertedDarkMode)
         button.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
         return button
     }()

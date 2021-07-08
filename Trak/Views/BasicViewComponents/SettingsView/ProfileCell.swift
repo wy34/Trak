@@ -14,7 +14,7 @@ class ProfileCell: UITableViewCell {
     var settingsOption: SettingsOption? {
         didSet {
             guard let option = settingsOption else { return }
-            profileImageView.image = UIImage(systemName: option.image)
+            profileImageView.image = option.image
             setupName()
             setupImage()
         }
@@ -24,7 +24,6 @@ class ProfileCell: UITableViewCell {
     private let profileImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.image = UIImage(named: "person.circle")
         iv.tintColor = UIColor.InvertedDarkMode
         iv.clipsToBounds = true
         return iv

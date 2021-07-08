@@ -13,7 +13,7 @@ struct ShareOption {
 }
 
 let options = [
-    ShareOption(image: UIImage(named: "message")!, optionName: "MESSAGE".localized()),
-    ShareOption(image: UIImage(named: "download")!, optionName: "DOWNLOAD".localized()),
-    ShareOption(image: UIImage(named: "more")!, optionName: "MORE".localized()),
+    ShareOption(image: Assets.message, optionName: "MESSAGE".localized()),
+    ShareOption(image: Assets.download, optionName: "DOWNLOAD".localized()),
+    ShareOption(image: Assets.more, optionName: "MORE".localized()),
 ]

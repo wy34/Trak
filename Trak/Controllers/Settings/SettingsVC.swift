@@ -10,11 +10,13 @@ import UIKit
 class SettingsVC: UIViewController {
     // MARK: - Properties
     let options = [
-        ["Profile".localized(), [SettingsOption(name: "", image: "person.circle", color: .orange)]],
-        ["Interface".localized(), [SettingsOption(name: "Dark Mode".localized(), image: "moon.fill", color: #colorLiteral(red: 0.2783971429, green: 0.2784510851, blue: 0.2783937454, alpha: 1))]],
-        ["Security".localized(), [SettingsOption(name: "Face/Touch ID".localized(), image: "faceid", color: #colorLiteral(red: 0.1905299723, green: 0.7938148379, blue: 0.6472710371, alpha: 1))]],
-        ["App".localized(), [SettingsOption(name: "Language".localized(), image: "globe", color: .systemBlue), SettingsOption(name: "Clear History".localized(), image: "trash.fill", color: .systemRed)]]
+        ["Profile".localized(), [SettingsOption(name: "", image: SFSymbols.person, color: .orange)]],
+        ["Interface".localized(), [SettingsOption(name: "Dark Mode".localized(), image: SFSymbols.moonFill, color: #colorLiteral(red: 0.2783971429, green: 0.2784510851, blue: 0.2783937454, alpha: 1))]],
+        ["Security".localized(), [SettingsOption(name: "Face/Touch ID".localized(), image: SFSymbols.faceid, color: #colorLiteral(red: 0.1905299723, green: 0.7938148379, blue: 0.6472710371, alpha: 1))]],
+        ["App".localized(), [SettingsOption(name: "Language".localized(), image: SFSymbols.globe, color: .systemBlue), SettingsOption(name: "Clear History".localized(), image: SFSymbols.trashFill, color: .systemRed)]]
     ]
+    
+    let reuseId = "SettingsVC"
     
     // MARK: - Views
     private lazy var tableView: UITableView = {
@@ -22,7 +24,7 @@ class SettingsVC: UIViewController {
         tv.register(ProfileCell.self, forCellReuseIdentifier: profileCellId)
         tv.register(BasicSettingsCell.self, forCellReuseIdentifier: basicSettingCellId)
         tv.register(AuthenciationToggleCell.self, forCellReuseIdentifier: authToggleCellId)
-        tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tv.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
         tv.backgroundColor = UIColor.StandardDarkMode
         tv.delegate = self
         tv.dataSource = self
@@ -165,7 +167,8 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
                 let vc = LanguageVC()
                 navigationController?.pushViewController(vc, animated: true)
             case (3, 1):
-                let deleteAlert = UIAlertController(title: "Clear Activity History".localized(), message: "Are you sure you want to delete your activity history? This cannot be undone.".localized(), preferredStyle: .alert)
+                let alertMessage = "Are you sure you want to delete your activity history? This cannot be undone."
+                let deleteAlert = UIAlertController(title: "Clear Activity History".localized(), message: alertMessage.localized(), preferredStyle: .alert)
                 deleteAlert.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { (action) in
                     self.deleteHistory()
                 }))

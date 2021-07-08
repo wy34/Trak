@@ -14,7 +14,7 @@ class BasicSettingsCell: UITableViewCell {
     var settingsOption: SettingsOption? {
         didSet {
             guard let option = settingsOption else { return }
-            iconImageView.image = UIImage(systemName: option.image)
+            iconImageView.image = option.image
             settingsLabel.text = option.name
             view.backgroundColor = option.color
         }

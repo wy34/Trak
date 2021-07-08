@@ -17,15 +17,15 @@ class MoreActionsLauncher: NSObject {
     var changeProfileVC: ChangeProfileVC? = nil
     
     var moreActions = [
-        Option(title: Action.Share, image: "square.and.arrow.up"),
-        Option(title: Action.Edit, image: "pencil.circle"),
-        Option(title: Action.Delete, image: "trash"),
-        Option(title: Action.Cancel, image: "xmark.circle")
+        Option(title: Action.Share, image: SFSymbols.squareArrowUp),
+        Option(title: Action.Edit, image: SFSymbols.pencilCircle),
+        Option(title: Action.Delete, image: SFSymbols.trash),
+        Option(title: Action.Cancel, image: SFSymbols.xmarkCircle)
     ]
     
     var cameraActions = [
-        Option(title: UIImagePickerController.SourceType.photoLibrary, image: "photo"),
-        Option(title: UIImagePickerController.SourceType.camera, image: "camera")
+        Option(title: UIImagePickerController.SourceType.photoLibrary, image: SFSymbols.photo),
+        Option(title: UIImagePickerController.SourceType.camera, image: SFSymbols.camera)
     ]
     
     // MARK: - Views

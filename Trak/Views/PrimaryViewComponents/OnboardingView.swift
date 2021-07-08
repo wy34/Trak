@@ -13,7 +13,7 @@ class OnboardingPage: UIView {
     var item: OnboardingItem? {
         didSet {
             guard let item = item else { return }
-            imageView.image = UIImage(named: item.imageName)
+            imageView.image = item.image
             descriptionLabel.text = item.description
             
             for (index, letter) in item.title.enumerated() {

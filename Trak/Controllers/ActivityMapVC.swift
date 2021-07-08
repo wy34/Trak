@@ -53,24 +53,24 @@ class ActivityMapVC: UIViewController {
     }()
     
     private let locationButton: UIButton = {
-        let button = UIButton.createMapButtons(withImage: "")
+        let button = UIButton.createMapButtons(withImage: nil)
         button.addTarget(self, action: #selector(goBackToUserLocation), for: .touchUpInside)
         return button
     }()
     
     private let musicLibraryButton: UIButton = {
-        let button = UIButton.createMapButtons(withImage: "list.bullet")
+        let button = UIButton.createMapButtons(withImage: SFSymbols.bulletList)
         let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 14))
-        button.setImage(UIImage(systemName: "list.bullet", withConfiguration: imageConfig), for: .normal)
+        button.setImage(SFSymbols.bulletList.applyingSymbolConfiguration(imageConfig), for: .normal)
         button.addTarget(self, action: #selector(openMusicLibrary), for: .touchUpInside)
         button.alpha = 0
         return button
     }()
     
     private let musicPlayerButton: UIButton = {
-        let button = UIButton.createMapButtons(withImage: "music.note")
+        let button = UIButton.createMapButtons(withImage: SFSymbols.musicNote)
         let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 14))
-        button.setImage(UIImage(systemName: "music.note", withConfiguration: imageConfig), for: .normal)
+        button.setImage(SFSymbols.musicNote.applyingSymbolConfiguration(imageConfig), for: .normal)
         button.addTarget(self, action: #selector(showSlideOutView), for: .touchUpInside)
         button.alpha = 0
         return button
@@ -100,7 +100,7 @@ class ActivityMapVC: UIViewController {
     private func configureUI() {
         edgesForExtendedLayout = []
         view.backgroundColor = UIColor.StandardDarkMode
-        updateLocationButtonImage(to: "location")
+        updateLocationButtonImage(to: SFSymbols.location)
         statsView.delegate = self
     }
     
@@ -189,22 +189,23 @@ class ActivityMapVC: UIViewController {
         zoomAndCenterUserLocation()
     }
     
-    private func updateLocationButtonImage(to image: String) {
+    private func updateLocationButtonImage(to image: UIImage) {
         let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 12))
-        locationButton.setImage(UIImage(systemName: image, withConfiguration: imageConfig), for: .normal)
+        locationButton.setImage(image.applyingSymbolConfiguration(imageConfig), for: .normal)
     }
     
     private func zoomAndCenterUserLocation() {
         guard let userLocation =  locationManager?.location else { return }
         let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: true)
-        updateLocationButtonImage(to: "location.fill")
+        updateLocationButtonImage(to: SFSymbols.locationFill)
     }
     
     private func disableButtons() {
         locationButton.isEnabled = false
         statsView.buttonStack.isUserInteractionEnabled = false
-        let alert = UIAlertController(title: "Location Service Disabled", message: "If you want to track your activities, please go to Settings > Trak > Location and allow track to use your location.", preferredStyle: .alert)
+        let alertMessage = "If you want to track your activities, please go to Settings > Trak > Location and allow track to use your location."
+        let alert = UIAlertController(title: "Location Service Disabled", message: alertMessage, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: { (action) in
             UIApplication.shared.open(URL(string:UIApplication.openSettingsURLString)!)
@@ -251,13 +252,16 @@ class ActivityMapVC: UIViewController {
     
     private func takeSnapshot() {
         guard let snapshotWithOverlays = convertViewToImage() else { return }
+        
         let activitySession = CoreDataManager.shared.createActivity(withSnapshot: snapshotWithOverlays, duration: ActivityTimer.shared.elapsedTimeInSeconds, pausedDuration: ActivityTimer.shared.pausedTimeInSeconds, distance: self.totalActiveDistance, pausedDistance: totalPausedDistance, coordinates: allLocations)
         let summaryView = SummaryViewController()
         summaryView.activitySession = activitySession
         summaryView.alreadySaved = false
+        
         let navController = UINavigationController(rootViewController: summaryView)
         navController.modalPresentationStyle = .fullScreen
         navController.modalTransitionStyle = .crossDissolve
+        
         self.present(navController, animated: true) {
             self.removePinsAndPolylines()
             self.showHideTabBar(hide: false)
@@ -273,7 +277,7 @@ class ActivityMapVC: UIViewController {
             self.locationButton.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 0.8, y: 0)
             self.slideOutView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 0.8, y: 0)
             let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 14))
-            self.musicPlayerButton.setImage(UIImage(systemName: "xmark", withConfiguration: imageConfig), for: .normal)
+            self.musicPlayerButton.setImage(SFSymbols.xmark.applyingSymbolConfiguration(imageConfig), for: .normal)
             self.mapView.isUserInteractionEnabled = false
         }
     }
@@ -284,7 +288,7 @@ class ActivityMapVC: UIViewController {
             self.mapView.transform = .identity
             self.locationButton.transform = .identity
             let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 14))
-            self.musicPlayerButton.setImage(UIImage(systemName: "music.note", withConfiguration: imageConfig), for: .normal)
+            self.musicPlayerButton.setImage(SFSymbols.musicNote.applyingSymbolConfiguration(imageConfig), for: .normal)
             self.mapView.isUserInteractionEnabled = true
         }
     }
@@ -302,13 +306,14 @@ class ActivityMapVC: UIViewController {
     }
     
     // MARK: - Selectors
-    @objc func goBackToUserLocation() {locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+    @objc func goBackToUserLocation() {
+        locationButton.setImage(SFSymbols.location, for: .normal)
         zoomAndCenterUserLocation()
     }
     
     @objc func didDragMap(gesture: UIPanGestureRecognizer) {
         if gesture.state == .began {
-            updateLocationButtonImage(to: "location")
+            updateLocationButtonImage(to: SFSymbols.location)
         }
     }
     
@@ -376,7 +381,7 @@ extension ActivityMapVC: MKMapViewDelegate {
         if centerUserLocation {
             zoomAndCenterUserLocation()
             centerUserLocation = false
-            updateLocationButtonImage(to: "location.fill")
+            updateLocationButtonImage(to: SFSymbols.locationFill)
         }
     }
     
@@ -456,7 +461,7 @@ extension ActivityMapVC: TimerDistanceViewDelegate {
                 mapView.addAnnotation(mapAnnotation!)
             }
             
-            updateLocationButtonImage(to: "location")
+            updateLocationButtonImage(to: SFSymbols.location)
 
             saveCoordinatesFrom(array: pausedLocations)
             takeSnapshot()
