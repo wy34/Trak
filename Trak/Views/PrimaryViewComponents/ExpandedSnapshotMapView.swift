@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-protocol ExpandedSnapshotMapViewDelegate: class {
+protocol ExpandedSnapshotMapViewDelegate: AnyObject {
     func dismissView()
 }
 
@@ -28,11 +28,11 @@ class ExpandedSnapshotMapView: UIView {
     var isPausedLocations = false
 
     // MARK: - Views
-    private let headerView = UIView.createView(withBgColor: UIColor(named: "StandardDarkMode")!, alpha: 1, andCornerRadius: 0)
+    private let headerView = UIView.createView(withBgColor: UIColor.StandardDarkMode, alpha: 1, andCornerRadius: 0)
     private let blueBorderLine = UIView.createBlueBorderLine()
     
     private let closeButton: UIButton = {
-        let button = UIButton.createControlButtons(withImage: "xmark.circle", withTitle: nil, andTintColor: UIColor(named: "InvertedDarkMode")!)
+        let button = UIButton.createControlButtons(withImage: "xmark.circle", withTitle: nil, andTintColor: UIColor.InvertedDarkMode)
         button.addTarget(self, action: #selector(handleClose), for: .touchUpInside)
         return button
     }()
@@ -40,7 +40,7 @@ class ExpandedSnapshotMapView: UIView {
     private let mapTypeSegmentedControl: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["STANDARD".localized(), "HYBRID".localized(), "SATELLITE".localized()])
         sc.selectedSegmentIndex = 0
-        sc.backgroundColor = UIColor(named: "StandardDarkMode")
+        sc.backgroundColor = UIColor.StandardDarkMode
         sc.addTarget(self, action: #selector(handleMapTypeChanged), for: .valueChanged)
         return sc
     }()
@@ -62,8 +62,8 @@ class ExpandedSnapshotMapView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func layoutViews() {
+    // MARK: - Helpers
+    private func layoutViews() {
         addSubviews(headerView, mapView)
     
         headerView.anchor(top: safeAreaLayoutGuide.topAnchor, right: rightAnchor, left: leftAnchor)
@@ -79,10 +79,9 @@ class ExpandedSnapshotMapView: UIView {
     }
     
 
-    func drawPolyline(withCoordinates coordinates: [Int: [[Double]]]) {
+    private func drawPolyline(withCoordinates coordinates: [Int: [[Double]]]) {
         let coordinatesArray = mapView.convertCoordinateDictionaryToCoordinateArrays(coordinates: coordinates)
 
-        // drawing on polylines
         for i in 0..<coordinatesArray.count {
             isPausedLocations = i % 2 == 0 ? false : true
             let polyline = MKPolyline(coordinates: coordinatesArray[i], count: coordinatesArray[i].count)
@@ -92,7 +91,7 @@ class ExpandedSnapshotMapView: UIView {
         mapView.addStartEndAnnotations(coordinates: coordinatesArray)
     }
     
-    // MARK: - Selector
+    // MARK: - Selectors
     @objc func handleClose() {
         delegate?.dismissView()
     }

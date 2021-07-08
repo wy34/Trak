@@ -20,10 +20,10 @@ struct TotalStatsView: View {
         VStack(alignment: .leading) {
             Spacer()
             Divider()
-                .background(Color("InvertedDarkMode"))
+                .background(Color(UIColor.InvertedDarkMode))
                 .padding([.leading, .trailing], 45)
             Text("Total Statistics".localized())
-                .font(.custom("MADETommySoft-Medium", size: 20, relativeTo: .body))
+                .font(.custom(TrakFontStyle.medium.rawValue, size: 20, relativeTo: .body))
                 .padding([.top, .trailing])
                 .padding(.leading, 45)
                 .padding(.top, -10)
@@ -38,13 +38,13 @@ struct TotalStatsView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(alignment: .firstTextBaseline, spacing: 2) {
                             Text("\(totalDistance, specifier: "%.2f")")
-                                .font(.custom("MADETommySoft-Regular", size: 20, relativeTo: .body))
+                                .font(.custom(TrakFontStyle.regular.rawValue, size: 20, relativeTo: .body))
                             Text(" mi")
-                                .font(.custom("MADETommySoft-Regular", size: 10, relativeTo: .body))
+                                .font(.custom(TrakFontStyle.regular.rawValue, size: 10, relativeTo: .body))
                         }
                         Text("Distance".localized())
                             .foregroundColor(.gray)
-                            .font(.custom("MADETommySoft-Light", size: 12, relativeTo: .body))
+                            .font(.custom(TrakFontStyle.light.rawValue, size: 12, relativeTo: .body))
                     }
                 }
                 Spacer()
@@ -58,11 +58,11 @@ struct TotalStatsView: View {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack(alignment: .firstTextBaseline, spacing: 2) {
                             Text("\(activityCount)")
-                                .font(.custom("MADETommySoft-Regular", size: 20, relativeTo: .body))
+                                .font(.custom(TrakFontStyle.regular.rawValue, size: 20, relativeTo: .body))
                         }
                         Text(activityCount == 1 ? "Activity".localized() : "Activities".localized())
                             .foregroundColor(.gray)
-                            .font(.custom("MADETommySoft-Light", size: 12, relativeTo: .body))
+                            .font(.custom(TrakFontStyle.light.rawValue, size: 12, relativeTo: .body))
                         
                     }
                 }
@@ -73,13 +73,13 @@ struct TotalStatsView: View {
                 .padding([.leading], 45)
             VStack(alignment: .leading) {
                 Text("Activities Performed".localized())
-                    .font(.custom("MADETommySoft-Medium", size: 12, relativeTo: .body))
+                    .font(.custom(TrakFontStyle.medium.rawValue, size: 12, relativeTo: .body))
                     .foregroundColor(.gray)
                     .padding(.bottom, 1)
                 HStack {
                     ForEach(activitiesPerformed, id: \.self) { item in
                         Text("\(item)")
-                            .font(.custom("MADETommySoft-Regular", size: 18, relativeTo: .body))
+                            .font(.custom(TrakFontStyle.regular.rawValue, size: 18, relativeTo: .body))
                     }
                 }
             }
@@ -93,7 +93,7 @@ struct TotalStatsView: View {
     }
     
     // MARK: - Helpers
-    func getActivityStats() -> (totalDistance: Double, count: Int, activities: [String]) {
+    private func getActivityStats() -> (totalDistance: Double, count: Int, activities: [String]) {
         let allActivities = coreDataManager.fetchActivities()
         var totalDistanceMiles = 0.0
         var activitiesPerformed = [String]()

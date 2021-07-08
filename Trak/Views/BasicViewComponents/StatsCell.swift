@@ -34,18 +34,21 @@ class StatsCell: UICollectionViewCell {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureUI()
         layoutViews()
-        backgroundColor = .clear
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func layoutViews() {
+    // MARK: - Helpers
+    private func configureUI() {
+        backgroundColor = .clear
+    }
+    
+    private func layoutViews() {
         addSubviews(stack)
-        
         stack.center(to: self, by: .centerX)
         stack.center(to: self, by: .centerY)
     }

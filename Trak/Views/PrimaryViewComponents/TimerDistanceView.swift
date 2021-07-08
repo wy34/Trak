@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-protocol TimerDistanceViewDelegate: class {
+protocol TimerDistanceViewDelegate: AnyObject {
     func dropPin(withTitle title: String)
     func startStopLocationUpdates(timerStatus: TimerStatus)
     func showHoldProgressView()
@@ -40,9 +40,11 @@ class TimerDistanceView: UIView {
         let button = UIButton.createWorkoutButtons(withTitle: "HOLD TO FINISH".localized(), bgColor: .systemRed, isFinishButton: true)
         button.addTarget(self, action: #selector(handleFinishPressDown), for: .touchDown)
         button.addTarget(self, action: #selector(handleFinishPressUp), for: .touchUpInside)
+        
         let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleHoldToFinish))
         longPress.minimumPressDuration = 0.9
         button.addGestureRecognizer(longPress)
+        
         return button
     }()
     
@@ -59,25 +61,24 @@ class TimerDistanceView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDurationLabel), name: Notification.Name.didUpdateTime, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDistanceLabel), name: Notification.Name.didChangeDistance, object: nil)
+        layoutViews()
+        setupNotificationObservers()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         backgroundColor = UIColor(named: "StandardDarkMode")
         layer.shadowColor = UIColor(white: 0.25, alpha: 0.5).cgColor
         layer.shadowOpacity = 1
         layer.shadowRadius = 5
         switchUnitsButton.layer.transform = CATransform3DMakeRotation(-0.5, 1, 0, 0)
-        layoutViews()
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         addSubviews(buttonStack, durationLabel, durationCaptionLabel, distanceLabel, distanceCaptionLabel, switchUnitsButton)
         
         buttonStack.setDimension(hConst: 35)
@@ -104,38 +105,12 @@ class TimerDistanceView: UIView {
         switchUnitsButton.delegate = self
     }
     
-    // MARK: - Timer
-    @objc func startTimer() {
-        if timerStatus == .NotStarted {
-            timerStatus = .Resumed
-            ActivityTimer.shared.invalidate()
-            ActivityTimer.shared.start()
-            delegate?.dropPin(withTitle: "Start")
-            startPauseResumeButton.setTitle("PAUSE".localized(), for: .normal)
-            startPauseResumeButton.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-            durationLabel.text = ActivityTimer.shared.conciseFormattedTime
-        } else if timerStatus == .Resumed {
-            timerStatus = .Paused
-            ActivityTimer.shared.pause()
-            delegate?.startStopLocationUpdates(timerStatus: timerStatus)
-            buttonStack.removeArrangedSubview(startPauseResumeButton)
-            finishButton.isHidden = false
-            finishButton.alpha = 1
-            buttonStack.addArrangedSubview(startPauseResumeButton)
-            startPauseResumeButton.setTitle("RESUME".localized(), for: .normal)
-            startPauseResumeButton.backgroundColor = #colorLiteral(red: 0, green: 0.746263206, blue: 0.2877824903, alpha: 1)
-        } else if timerStatus == .Paused {
-            timerStatus = .Resumed
-            ActivityTimer.shared.resume()
-            delegate?.startStopLocationUpdates(timerStatus: timerStatus)
-            finishButton.isHidden = true
-            finishButton.alpha = 0
-            startPauseResumeButton.setTitle("PAUSE".localized(), for: .normal)
-            startPauseResumeButton.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
-        }
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDurationLabel), name: Notification.Name.didUpdateTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDistanceLabel), name: Notification.Name.didChangeDistance, object: nil)
     }
     
-    func finishTimer() {
+    private func finishTimer() {
         timerStatus = .NotStarted
         finishButton.isHidden = true
         finishButton.alpha = 0
@@ -144,12 +119,54 @@ class TimerDistanceView: UIView {
         delegate?.dropPin(withTitle: "End")
     }
     
+    private func configureStartTimer() {
+        timerStatus = .Resumed
+        ActivityTimer.shared.invalidate()
+        ActivityTimer.shared.start()
+        delegate?.dropPin(withTitle: "Start")
+        startPauseResumeButton.setTitle("PAUSE".localized(), for: .normal)
+        startPauseResumeButton.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+        durationLabel.text = ActivityTimer.shared.conciseFormattedTime
+    }
+    
+    private func configurePauseTimer() {
+        timerStatus = .Paused
+        ActivityTimer.shared.pause()
+        delegate?.startStopLocationUpdates(timerStatus: timerStatus)
+        buttonStack.removeArrangedSubview(startPauseResumeButton)
+        finishButton.isHidden = false
+        finishButton.alpha = 1
+        buttonStack.addArrangedSubview(startPauseResumeButton)
+        startPauseResumeButton.setTitle("RESUME".localized(), for: .normal)
+        startPauseResumeButton.backgroundColor = #colorLiteral(red: 0, green: 0.746263206, blue: 0.2877824903, alpha: 1)
+    }
+    
+    private func configureResumeTimer() {
+        timerStatus = .Resumed
+        ActivityTimer.shared.resume()
+        delegate?.startStopLocationUpdates(timerStatus: timerStatus)
+        finishButton.isHidden = true
+        finishButton.alpha = 0
+        startPauseResumeButton.setTitle("PAUSE".localized(), for: .normal)
+        startPauseResumeButton.backgroundColor = #colorLiteral(red: 1, green: 0.1491314173, blue: 0, alpha: 1)
+    }
+    
     func resetLabels() {
         distanceLabel.text = "0.00"
         ActivityTimer.shared.invalidate()
     }
     
-    // MARK: - Finish Button
+    // MARK: - Selectors
+    @objc func startTimer() {
+        if timerStatus == .NotStarted {
+            configureStartTimer()
+        } else if timerStatus == .Resumed {
+            configurePauseTimer()
+        } else if timerStatus == .Paused {
+            configureResumeTimer()
+        }
+    }
+    
     @objc func handleFinishPressDown() {
         delegate?.showHoldProgressView()
     }
@@ -165,7 +182,6 @@ class TimerDistanceView: UIView {
         }
     }
     
-    // MARK: - Label Updates
     @objc func updateDurationLabel() {
         durationLabel.text = ActivityTimer.shared.conciseFormattedTime
     }

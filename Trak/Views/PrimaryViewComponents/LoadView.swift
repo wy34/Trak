@@ -33,8 +33,8 @@ class LoadView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func drawCircle() {
+    // MARK: - Helpers
+    private func drawCircle() {
         let circularPath = UIBezierPath(arcCenter: CGPoint(x: screen.midX, y: screen.midY - 100), radius: 50, startAngle: -.pi / 2, endAngle: 2 * .pi, clockwise: true)
         
         underLayer.fillColor = UIColor.clear.cgColor
@@ -59,7 +59,7 @@ class LoadView: UIView {
         runImageView.frame = CGRect(x: screen.midX - (25/2), y: screen.midY - (100 + (25/2)), width: 25, height: 25)
     }
     
-    // MARK: - Selector
+    // MARK: - Selectors
     @objc func handleLoadProgressBar() {
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.toValue = 1

@@ -36,8 +36,8 @@ class RootTabBarController: UITabBarController {
         view.addSubview(launchScreenExtension)
     }
     
-    // MARK: - TabBar Setup
-    func setupTabBar() {
+    // MARK: - Helpers
+    private func setupTabBar() {
         mapVC.tabBarItem = UITabBarItem(title: "Map".localized(), image: UIImage(systemName: "map"), tag: 0)
                 
         historyVC.tabBarItem = UITabBarItem(title: "History".localized(), image: UIImage(systemName: "list.bullet"), tag: 1)
@@ -48,14 +48,13 @@ class RootTabBarController: UITabBarController {
         setupSettingsButton()
     }
     
-    func setupSettingsButton() {
+    private func setupSettingsButton() {
         let tabBarHeight = tabBar.frame.height
         let tabBarWidth = tabBar.frame.width
         settingsButton.frame = CGRect(x: 0, y: 0, width: tabBarWidth * 0.333, height: tabBarHeight)
         view.addSubviews(settingsButton)
     }
     
-    // MARK: - Authentication
     func authenticate() {
         let context = LAContext()
         var error: NSError?
@@ -72,8 +71,7 @@ class RootTabBarController: UITabBarController {
                             self?.mapVC.checkLocationServices()
                         }
                     } else {
-                        // when cancel is pressed
-                        print("Error with authenticating")
+                        debugPrint("Error with authenticating")
                         self?.launchScreenExtension.unlockBtn.isHidden = false
                     }
                 }
@@ -81,7 +79,7 @@ class RootTabBarController: UITabBarController {
         }
     }
     
-    func checkAuthentationOnOrOff() {
+    private func checkAuthentationOnOrOff() {
         let auth = UserDefaults.standard.bool(forKey: authUDKey)
         
         if auth == true {
@@ -102,100 +100,3 @@ class RootTabBarController: UITabBarController {
         present(vc, animated: true, completion: nil)
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    private lazy var settingsBackgroundView: UIView = {
-//        let view = UIView()
-//        view.alpha = 0
-//        view.isUserInteractionEnabled = true
-//        view.backgroundColor = .clear
-//        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
-//        return view
-//    }()
-//
-//    lazy var settingsView: SettingsView = {
-//        let view = SettingsView()
-//        view.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: #selector(handlePan(pan:))))
-//        return view
-//    }()
-
-
-//    // MARK: - Selectors
-//    @objc func presentSetting() {
-//        if let keyWindow = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
-//            settingsBackgroundView.frame = keyWindow.frame
-//            keyWindow.addSubview(settingsBackgroundView)
-//
-//            keyWindow.addSubview(settingsView)
-//            settingsView.frame = CGRect(x: 0, y: keyWindow.frame.height, width: keyWindow.frame.width, height: keyWindow.frame.height * 0.75)
-//
-//            UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.75, options: .curveEaseIn) {
-//                self.settingsBackgroundView.alpha = 1
-//                self.settingsView.frame.origin.y = self.view.frame.height * 0.25
-//            }
-//        }
-//    }
-//
-//    @objc func handleDismiss() {
-//        UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.75, options: .curveEaseOut) {
-//            self.settingsBackgroundView.alpha = 0
-//            self.settingsView.frame.origin.y = self.view.frame.height
-//        }
-//    }
-//
-//    @objc func handlePan(pan: UIPanGestureRecognizer) {
-//        let translation = pan.translation(in: self.view)
-//        let velocity = pan.velocity(in: self.view)
-//        if pan.state == .began {
-//            print("begin")
-//        } else if pan.state == .changed && translation.y > 0 {
-//            // have to add on the height of the empty space at the top
-//            self.settingsView.frame.origin.y = translation.y + (self.view.frame.height * 0.25)
-//        } else if pan.state == .ended {
-//            UIView.animate(withDuration: 0.3) {
-//                if translation.y > ((self.view.frame.height * 0.75) * 0.4) || velocity.y > 500 { // vertical drag downwards is greater than 40% of the card height or drag velocity is greater than 500
-//                    self.settingsView.frame.origin.y = self.view.frame.height
-//                    self.settingsBackgroundView.alpha = 0
-//                } else if translation.y < ((self.view.frame.height * 0.8) * 0.4) { // vertical drag is less than 40% of the card
-//                    self.settingsView.frame.origin.y = self.view.frame.height * 0.25
-//                }
-//            }
-//        }
-//    }
-

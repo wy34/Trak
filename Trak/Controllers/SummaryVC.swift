@@ -86,7 +86,7 @@ class SummaryViewController: UIViewController {
     private let milesWordLabel = UILabel.createSummaryViewStatsLabels(withTitle: "MI (active)", withFont: UIFont.preferredFont(forTextStyle: .caption1))
     private let durationWordLabel = UILabel.createSummaryViewStatsLabels(withTitle: "DURATION", withFont: UIFont.preferredFont(forTextStyle: .caption1))
 
-    private let summaryStackBackgroundView = UIView.createView(withBgColor: UIColor(named: "DarkModeGray")!, alpha: 1, andCornerRadius: 0)
+    private let summaryStackBackgroundView = UIView.createView(withBgColor: UIColor.DarkModeGray, alpha: 1, andCornerRadius: 0)
     
     private lazy var numbersStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [pausedDistanceLabelMiles, distanceLabelMiles, durationLabel])
@@ -185,23 +185,23 @@ class SummaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        layoutViews()
         setupSwipeGesture()
         setupButtonTargets()
         NotificationCenter.default.addObserver(self, selector: #selector(handleKeyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
     }
 
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         checkIfAlreadySaved()
         edgesForExtendedLayout = []
         view.backgroundColor = .systemGray6
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.medium16!)]
         characterCountLabel.text = "Characters left: ".localized() + "\(noteCharacterlimit)"
-        layoutViews()
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         view.addSubviews(mapSnapshotView, activityTypeLabel, activityTypeMenu, iconLabel, summaryCollectionView, uneditableTextView, editableTextView, btnStack, characterCountLabel, moreInfoView, scrollLeftBtn, scrollRightBtn)
         
         mapSnapshotView.setDimension(height: view.heightAnchor, hMult: 0.35)
@@ -250,7 +250,7 @@ class SummaryViewController: UIViewController {
         expandMapButton.center(x: moreInfoView.centerXAnchor, y: moreInfoView.centerYAnchor)
     }
     
-    func checkIfAlreadySaved() {
+    private func checkIfAlreadySaved() {
         if let alreadySaved = alreadySaved {
             if alreadySaved {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action:  #selector(handleMoreButton))
@@ -268,7 +268,7 @@ class SummaryViewController: UIViewController {
         }
     }
     
-    func setupSwipeGesture() {
+    private func setupSwipeGesture() {
         let swipe = UISwipeGestureRecognizer(target: self, action: #selector(handleKeyboardDismiss))
         swipe.direction = .down
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleKeyboardDismiss))
@@ -277,7 +277,7 @@ class SummaryViewController: UIViewController {
         swipe.delegate = self
     }
     
-    func drawPolyline(withCoordinates coordinates: [Int: [[Double]]]) {
+    private func drawPolyline(withCoordinates coordinates: [Int: [[Double]]]) {
         let coordinatesArray = mapSnapshotView.convertCoordinateDictionaryToCoordinateArrays(coordinates: coordinates)
 
         // drawing on polylines
@@ -290,19 +290,12 @@ class SummaryViewController: UIViewController {
         mapSnapshotView.addStartEndAnnotations(coordinates: coordinatesArray)
     }
     
-    func setupButtonTargets() {
+    private func setupButtonTargets() {
         scrollLeftBtn.addTarget(self, action: #selector(scrollStats(sender:)), for: .touchUpInside)
         scrollRightBtn.addTarget(self, action: #selector(scrollStats(sender:)), for: .touchUpInside)
     }
     
-    @objc func scrollStats(sender: UIButton) {
-        summaryCollectionView.setContentOffset(CGPoint(x: (CGFloat(sender.tag - 1) * (summaryCollectionViewWidth)), y: 0), animated: true)
-        scrollLeftBtn.isHidden = sender.tag == 1 ? true : false
-        scrollRightBtn.isHidden = sender.tag == 2 ? true : false
-    }
-    
-    // MARK: - Discard Activity
-    func discardAlert() {
+    private func discardAlert() {
         let alert = UIAlertController(title: "Delete Activity".localized(), message: "Do you want to delete this activity? This cannot be undone.".localized(), preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Yes".localized(), style: .destructive, handler: { (_) in
             self.discardActivity()
@@ -311,7 +304,7 @@ class SummaryViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    func discardActivity() {
+    private func discardActivity() {
         guard let activitySession = self.activitySession else { return }
         if let alreadySaved = self.alreadySaved {
             if alreadySaved {
@@ -327,15 +320,8 @@ class SummaryViewController: UIViewController {
         }
     }
     
-    // MARK: - UpdateHistoryCountBadge
-    func updateHistoryCountBadge() {
+    private func updateHistoryCountBadge() {
         UIApplication.tabBarController()?.viewControllers?[1].tabBarItem.badgeValue = "New".localized()
-    }
-
-    // MARK: - Edit
-    @objc func handleMoreButton() {
-        moreActionsLauncher.summaryVC = self
-        moreActionsLauncher.showMoreActionsMenu()
     }
     
     func showViewForAction(action: Action) {
@@ -352,10 +338,10 @@ class SummaryViewController: UIViewController {
         }
     }
     
-    func setupEditPhase() {
-        guard let activitySession = self.activitySession else { print("workout session"); return }
-        guard let note = activitySession.activityNote else { print("workout note"); return }
-        guard let type = activitySession.activityType else { print("type"); return }
+    private func setupEditPhase() {
+        guard let activitySession = self.activitySession else { debugPrint("workout session"); return }
+        guard let note = activitySession.activityNote else { debugPrint("workout note"); return }
+        guard let type = activitySession.activityType else { debugPrint("type"); return }
         navigationItem.title = "Edit Mode".localized()
         
         let cancelEdit = UIBarButtonItem(title: "Cancel".localized(), style: .plain, target: self, action: #selector(self.handleCancelEdit))
@@ -382,35 +368,7 @@ class SummaryViewController: UIViewController {
         characterCountLabel.isHidden = false
     }
     
-    @objc func handleCancelEdit() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action:  #selector(handleMoreButton))
-        uneditableTextView.text = activitySession?.activityNote
-        uneditableTextView.isHidden = false
-        editableTextView.isHidden = true
-        
-        saveBtn.isHidden = true
-        shareBtn.isHidden = false
-        deleteBtn.alpha = 0
-        
-        activityTypeMenu.isHidden = true
-        iconLabel.isHidden = false
-        characterCountLabel.isHidden = true
-        
-        navigationItem.title = activitySessionVM?.formattedDateTimeString
-        dismissKeyboard()
-        
-        if let constant = activityTypeLabelLeftAnchor?.constant, ...0 ~= constant {
-            closeMenu(withTypeSelection: nil)
-            activityTypeMenu.resetMenuToDefault()
-        }
-    }
-    
-    // MARK: - Share/Save
-    @objc func handleShare() {
-        goToShareVC()
-    }
-    
-    func goToShareVC() {
+    private func goToShareVC() {
         shareVC.activitySession = self.activitySession
         let navController = UINavigationController(rootViewController: shareVC)
         navController.modalTransitionStyle = .crossDissolve
@@ -418,11 +376,7 @@ class SummaryViewController: UIViewController {
         present(navController, animated: true, completion: nil)
     }
     
-    @objc func handleSave() {
-        saveActivity()
-    }
-    
-    func saveActivity() {
+    private func saveActivity() {
         guard let alreadySaved = alreadySaved else { return }
         guard let note = editableTextView.text else { return }
         guard let activitySession = self.activitySession else { return }
@@ -455,14 +409,65 @@ class SummaryViewController: UIViewController {
         }
     }
     
+    private func dismissKeyboard() {
+        if showingKeyboard == true {
+            UIView.animate(withDuration: 0.3) {
+                self.view.frame.origin.y = self.originalOriginY
+                self.view.layoutIfNeeded()
+            }
+            editableTextView.endEditing(true)
+            showingKeyboard = false
+        }
+    }
+
+    // MARK: - Selectors
+    @objc func scrollStats(sender: UIButton) {
+        summaryCollectionView.setContentOffset(CGPoint(x: (CGFloat(sender.tag - 1) * (summaryCollectionViewWidth)), y: 0), animated: true)
+        scrollLeftBtn.isHidden = sender.tag == 1 ? true : false
+        scrollRightBtn.isHidden = sender.tag == 2 ? true : false
+    }
+    
+    @objc func handleMoreButton() {
+        moreActionsLauncher.summaryVC = self
+        moreActionsLauncher.showMoreActionsMenu()
+    }
+    
+    @objc func handleCancelEdit() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "ellipsis"), style: .plain, target: self, action:  #selector(handleMoreButton))
+        uneditableTextView.text = activitySession?.activityNote
+        uneditableTextView.isHidden = false
+        editableTextView.isHidden = true
+        
+        saveBtn.isHidden = true
+        shareBtn.isHidden = false
+        deleteBtn.alpha = 0
+        
+        activityTypeMenu.isHidden = true
+        iconLabel.isHidden = false
+        characterCountLabel.isHidden = true
+        
+        navigationItem.title = activitySessionVM?.formattedDateTimeString
+        dismissKeyboard()
+        
+        if let constant = activityTypeLabelLeftAnchor?.constant, ...0 ~= constant {
+            closeMenu(withTypeSelection: nil)
+            activityTypeMenu.resetMenuToDefault()
+        }
+    }
+    
+    @objc func handleShare() {
+        goToShareVC()
+    }
+    
+    @objc func handleSave() {
+        saveActivity()
+    }
+    
     @objc func deleteActivity() {
-//        guard let activitySession = activitySession else { return }
-//        CoreDataManager.shared.deleteActivity(activity: activitySession)
         dismissKeyboard()
         discardAlert()
     }
     
-    // MARK: - Keyboard Events
     @objc func handleKeyboardWillShow(notification: Notification) {
         if showingKeyboard == false {
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
@@ -478,19 +483,7 @@ class SummaryViewController: UIViewController {
     @objc func handleKeyboardDismiss() {
         dismissKeyboard()
     }
-
-    func dismissKeyboard() {
-        if showingKeyboard == true {
-            UIView.animate(withDuration: 0.3) {
-                self.view.frame.origin.y = self.originalOriginY
-                self.view.layoutIfNeeded()
-            }
-            editableTextView.endEditing(true)
-            showingKeyboard = false
-        }
-    }
-
-    // MARK: - ExpandMap
+    
     @objc func expandSnapshotMap() {
         if let keyWindow = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
             expandedSnapshotMapView = ExpandedSnapshotMapView()
@@ -515,7 +508,7 @@ extension SummaryViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StatsCell.reuseId, for: indexPath) as! StatsCell
         if indexPath.item % 2 != 0 {
-            cell.addLeftCellBorder(withColor: UIColor(named: "DarkModeGray")!, width: 1, height: 25)
+            cell.addLeftCellBorder(withColor: UIColor.DarkModeGray, width: 1, height: 25)
         }
         cell.stats = statsArray[indexPath.row]
         return cell

@@ -25,9 +25,9 @@ class ActivityHistoryCell: UITableViewCell {
     // MARK: - Views
     private let activityTypeIcon = UILabel()
     
-    private let distanceLabel = UILabel.createLabel(withTitle: "0.04 mi", textColor: nil, font: UIFont.bold16)
+    private let distanceLabel = UILabel.createLabel(withTitle: "", textColor: nil, font: UIFont.bold16)
     
-    private let durationLabel = UILabel.createLabel(withTitle: "00:00:50", textColor: .systemGray3, font: UIFont.medium12)
+    private let durationLabel = UILabel.createLabel(withTitle: "", textColor: .systemGray3, font: UIFont.medium12)
     
     private lazy var distanceDurationStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [distanceLabel, durationLabel])
@@ -36,11 +36,12 @@ class ActivityHistoryCell: UITableViewCell {
         return stack
     }()
     
-    private let dateLabel = UILabel.createLabel(withTitle: "12/02/20", textColor: nil, font: UIFont.bold13)
+    private let dateLabel = UILabel.createLabel(withTitle: "", textColor: nil, font: UIFont.bold13)
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configureUI()
         layoutUI()
     }
     
@@ -48,16 +49,18 @@ class ActivityHistoryCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func layoutUI() {
-        backgroundColor = UIColor(named: "StandardDarkMode")
-        
+    // MARK: - Helpers
+    private func configureUI() {
+        backgroundColor = UIColor.StandardDarkMode
+        activityTypeIcon.tintColor = UIColor.InvertedDarkMode
+    }
+    
+    private func layoutUI() {
         addSubviews(activityTypeIcon, distanceDurationStack, dateLabel)
         
         activityTypeIcon.setDimension(wConst: 30, hConst: 30)
         activityTypeIcon.center(to: self, by: .centerY)
         activityTypeIcon.anchor(left: leftAnchor, paddingLeft: 25)
-        activityTypeIcon.tintColor = UIColor(named: "InvertedDarkMode")
         
         distanceDurationStack.center(to: activityTypeIcon, by: .centerY)
         distanceDurationStack.setDimension(width: widthAnchor, wMult: 0.5)

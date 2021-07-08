@@ -42,7 +42,7 @@ class CoreDataManager {
             do {
                 try persistentContainer.viewContext.save()
             } catch {
-                print(error.localizedDescription)
+                debugPrint(error.localizedDescription)
             }
         }
     }
@@ -53,7 +53,7 @@ class CoreDataManager {
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
             return []
         }
     }
@@ -69,7 +69,7 @@ class CoreDataManager {
         do {
             try persistentContainer.viewContext.execute(batchDeleteRequest)
         } catch {
-            print(error.localizedDescription)
+            debugPrint(error.localizedDescription)
         }
     }
 }

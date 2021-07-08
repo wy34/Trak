@@ -12,7 +12,7 @@ class AutomaticDarkModeCell: UITableViewCell {
     static let reuseId = "AutomaticDarkModeCellId"
     
     // MARK: - Views
-    private let headerLabel = UILabel.createLabel(withTitle: "Automatic".localized(), textColor: UIColor(named: "InvertedDarkMode"), font: UIFont.bold16, andAlignment: .left)
+    private let headerLabel = UILabel.createLabel(withTitle: "Automatic".localized(), textColor: UIColor.InvertedDarkMode, font: UIFont.bold16, andAlignment: .left)
     private let descriptionLabel = UILabel.createLabel(withTitle: "When enabled, Trak will match your iOS appearance.".localized(), textColor: .systemGray, font: UIFont.medium14, andAlignment: .left)
     
     lazy var toggle: UISwitch = {
@@ -27,20 +27,20 @@ class AutomaticDarkModeCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         configureUI()
+        layoutViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI() {
-        backgroundColor = UIColor(named: "SettingsCellColor")
+    // MARK: - Helpers
+    private func configureUI() {
+        backgroundColor = UIColor.SettingsCellColor
         descriptionLabel.numberOfLines = 0
-        layoutViews()
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         addSubviews(headerLabel, descriptionLabel)
         headerLabel.setDimension(width: widthAnchor, height: heightAnchor, wMult: 0.715, hMult: 0.2)
         headerLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 16, paddingLeft: 12)
@@ -55,7 +55,7 @@ class AutomaticDarkModeCell: UITableViewCell {
         toggle.frame.origin.x = frame.width - (toggle.frame.width + 12)
     }
     
-    // MARK: - Selector
+    // MARK: - Selectors
     @objc func turnOnOffAutomaticDarkMode() {
         NotificationCenter.default.post(name: Notification.Name.didSwitchAutomaticDarkMode, object: nil)
     }

@@ -8,12 +8,15 @@
 import Foundation
 
 struct ActivityHistoryCellViewModel {
+    // MARK: - Properties
     var activitySession: ActivitySession
     
+    // MARK: - Init
     init(activitySession: ActivitySession) {
         self.activitySession = activitySession
     }
     
+    // MARK: - Properties
     var fullFormattedTime: String {
         let elapsedTimeInSeconds = activitySession.duration + Int16(activitySession.pausedDuration)
         let seconds = elapsedTimeInSeconds % 60

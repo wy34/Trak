@@ -23,7 +23,7 @@ class UpsideDownCommentView: UIView {
         // shadow
         let context = UIGraphicsGetCurrentContext()
         let shadow = NSShadow()
-        shadow.shadowColor = UIColor(named: "InvertedDarkMode")?.withAlphaComponent(0.09)
+        shadow.shadowColor = UIColor.InvertedDarkMode.withAlphaComponent(0.09)
         shadow.shadowOffset = CGSize(width: 0, height: -5)
         shadow.shadowBlurRadius = 10
         
@@ -45,7 +45,7 @@ class UpsideDownCommentView: UIView {
         context?.setShadow(offset: shadow.shadowOffset, blur: shadow.shadowBlurRadius, color: (shadow.shadowColor as! UIColor).cgColor)
         
         UIColor.clear.setStroke()
-        UIColor(named: "StandardDarkMode")!.setFill()
+        UIColor.StandardDarkMode.setFill()
         bezierPath.stroke()
         bezierPath.fill()
         bezierPath.lineWidth = lineWidth

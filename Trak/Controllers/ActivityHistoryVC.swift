@@ -17,8 +17,7 @@ class ActivityHistoryVC: UITableViewController {
         configureLargeNavBar(withTitle: "Distance History".localized(), andBackButtonTitle: "")
         setupTableView()
         activities = CoreDataManager.shared.fetchActivities()
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshTable), name: .didSaveActivity, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(refreshTable), name: .didDeleteAllActivities, object: nil)
+        setupNotificationObservers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,11 +26,16 @@ class ActivityHistoryVC: UITableViewController {
     }
     
     // MARK: - Helper
-    func setupTableView() {
+    private func setupTableView() {
         tableView.register(ActivityHistoryCell.self, forCellReuseIdentifier: ActivityHistoryCell.reuseId)
-        tableView.backgroundColor = UIColor(named: "StandardDarkMode")
+        tableView.backgroundColor = UIColor.StandardDarkMode
         tableView.rowHeight = 65
         tableView.tableFooterView = UIView()
+    }
+    
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTable), name: .didSaveActivity, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(refreshTable), name: .didDeleteAllActivities, object: nil)
     }
     
     // MARK: - Selectors

@@ -8,6 +8,7 @@
 import UIKit
 
 class TextViewWithImage: UITextView {
+    // MARK: - Properties
     var leftImage: UIImage? {
         didSet {
             guard let leftImage = leftImage else { return }
@@ -15,9 +16,10 @@ class TextViewWithImage: UITextView {
         }
     }
 
+    // MARK: - Helpers
     fileprivate func applyLeftImage(_ image: UIImage) {
         let imageView = UIImageView(image: image)
-        imageView.tintColor = UIColor(named: "InvertedDarkMode")
+        imageView.tintColor = UIColor.InvertedDarkMode
         imageView.frame = CGRect(x: 0, y: 10, width: image.size.width + 20, height: image.size.height)
         imageView.contentMode = .center
         self.addSubview(imageView)

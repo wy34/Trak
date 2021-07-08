@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00B603BC7F5B5F1E67529E93 /* Pods_Trak.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DDC640D369E94C566C9A60E /* Pods_Trak.framework */; };
+		4C9F2C852696A79300F48D38 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C9F2C842696A79300F48D38 /* UIColor.swift */; };
 		4CCD6BFA25D1BDD000B9E299 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD6BFC25D1BDD000B9E299 /* Localizable.strings */; };
 		4CCD6C0C25D1BE8A00B9E299 /* TommySoftBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD6C0825D1BE8A00B9E299 /* TommySoftBold.otf */; };
 		4CCD6C0D25D1BE8A00B9E299 /* TommySoftMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4CCD6C0925D1BE8A00B9E299 /* TommySoftMedium.otf */; };
@@ -84,6 +85,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4C9F2C842696A79300F48D38 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		4CCD6BFB25D1BDD000B9E299 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		4CCD6BFE25D1BDD100B9E299 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		4CCD6BFF25D1BDDD00B9E299 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -180,6 +182,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C9F2C832696A57400F48D38 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				4CCD6C0825D1BE8A00B9E299 /* TommySoftBold.otf */,
+				4CCD6C0B25D1BE8A00B9E299 /* TommySoftLight.otf */,
+				4CCD6C0925D1BE8A00B9E299 /* TommySoftMedium.otf */,
+				4CCD6C0A25D1BE8A00B9E299 /* TommySoftRegular.otf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		4CCD6BF625D1BDA200B9E299 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -195,6 +208,7 @@
 				4CCD6C1525D1BEE700B9E299 /* UIApplication.swift */,
 				4CCD6C1825D1BEF100B9E299 /* UIFont.swift */,
 				4CCD6C1B25D1BEF500B9E299 /* UIButton.swift */,
+				4C9F2C842696A79300F48D38 /* UIColor.swift */,
 				4CCD6C1E25D1BEFE00B9E299 /* UILabel.swift */,
 				4CCD6C2125D1BF0500B9E299 /* Notification.Name.swift */,
 				4CCD6C2425D1BF0A00B9E299 /* Int16.swift */,
@@ -271,10 +285,7 @@
 			children = (
 				4CFDFE4B25D1BC9900588CDD /* LaunchScreen.storyboard */,
 				4CFDFE4925D1BC9900588CDD /* Assets.xcassets */,
-				4CCD6C0825D1BE8A00B9E299 /* TommySoftBold.otf */,
-				4CCD6C0B25D1BE8A00B9E299 /* TommySoftLight.otf */,
-				4CCD6C0925D1BE8A00B9E299 /* TommySoftMedium.otf */,
-				4CCD6C0A25D1BE8A00B9E299 /* TommySoftRegular.otf */,
+				4C9F2C832696A57400F48D38 /* Fonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -602,6 +613,7 @@
 				4CCD6CAF25D1C2F000B9E299 /* BaseLocationRequestView.swift in Sources */,
 				4CCD6C8025D1C22600B9E299 /* AutomaticDarkModeCell.swift in Sources */,
 				4CCD6C7925D1C1CE00B9E299 /* StatsCell.swift in Sources */,
+				4C9F2C852696A79300F48D38 /* UIColor.swift in Sources */,
 				4CCD6CAB25D1C2D900B9E299 /* OnboardingView.swift in Sources */,
 				4CCD6CA525D1C2CD00B9E299 /* MoreActionsLauncher.swift in Sources */,
 				4CCD6C8A25D1C25500B9E299 /* AuthenticationToggleCell.swift in Sources */,

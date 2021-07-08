@@ -39,8 +39,8 @@ class ShareOptionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Helper
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         addSubviews(optionImage, optionName)
         optionImage.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.5, hMult: 0.5)
         optionImage.anchor(top: topAnchor)

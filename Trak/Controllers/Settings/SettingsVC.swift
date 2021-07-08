@@ -23,7 +23,7 @@ class SettingsVC: UIViewController {
         tv.register(BasicSettingsCell.self, forCellReuseIdentifier: basicSettingCellId)
         tv.register(AuthenciationToggleCell.self, forCellReuseIdentifier: authToggleCellId)
         tv.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        tv.backgroundColor = UIColor(named: "StandardDarkMode")
+        tv.backgroundColor = UIColor.StandardDarkMode
         tv.delegate = self
         tv.dataSource = self
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
@@ -35,24 +35,24 @@ class SettingsVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.largeTitleDisplayMode = .never
-        configureLargeNavBar(withTitle: "Settings".localized(), andBackButtonTitle: "")
+        setupNavbar()
         configureUI()
-        // prints user defaults plist
-        let path: [AnyObject] = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true) as [AnyObject]
-        let folder: String = path[0] as! String
-        print(folder)
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func setupNavbar() {
+        navigationItem.largeTitleDisplayMode = .never
+        configureLargeNavBar(withTitle: "Settings".localized(), andBackButtonTitle: "")
+    }
+    
+    private func configureUI() {
         navigationController?.navigationBar.isTranslucent = false
         edgesForExtendedLayout = []
         view.addSubview(tableView)
         tableView.anchor(top: view.topAnchor, right: view.rightAnchor, bottom: view.bottomAnchor, left: view.leftAnchor)
     }
     
-    func deleteHistory() {
+    private func deleteHistory() {
         if let keywindow = UIApplication.shared.windows.filter({ $0.isKeyWindow }).first {
             let blackView = UIView()
             blackView.backgroundColor = .black

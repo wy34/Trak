@@ -20,7 +20,7 @@ extension MKMapView {
         var finalArray = [[CLLocationCoordinate2D]]()
         
         for key in sortedKeys {
-            guard let latLonArray = coordinates[key] else { return [] } // [[1,2,3], [1,2,3]]
+            guard let latLonArray = coordinates[key] else { return [] } 
             
             let lat = latLonArray[0]
             let lon = latLonArray[1]

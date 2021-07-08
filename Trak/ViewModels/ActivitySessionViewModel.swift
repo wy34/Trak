@@ -8,22 +8,17 @@
 import UIKit
 
 struct ActivitySessionViewModel {
+    // MARK: - Properties
     var isShareScreen: Bool
     var activitySession: ActivitySession
     
+    // MARK: - Init
     init(_ activitySession: ActivitySession, isShareScreen: Bool = false) {
         self.activitySession = activitySession
         self.isShareScreen = isShareScreen
     }
     
-    func conciseDurationForTime(duration: Int16) -> String {
-        let elapsedTimeInSeconds = duration
-        let seconds = elapsedTimeInSeconds % 60
-        let minutes = (elapsedTimeInSeconds / 60) % 60
-        let hours = elapsedTimeInSeconds / 3600
-        return hours == 0 ? String(format: "%2d:%02d", minutes, seconds) : String(format: "%2d:%02d:%02d", hours, minutes, seconds)
-    }
-    
+    // MARK: - Properties
     var formattedDateTimeString: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yy"
@@ -102,7 +97,6 @@ struct ActivitySessionViewModel {
     var formattedTotalDurationString: NSAttributedString {
         var attributedText: NSAttributedString
         let formattedDuration = conciseDurationForTime(duration: activitySession.pausedDuration + activitySession.duration)
-
         
         if !isShareScreen {
             attributedText = NSAttributedString(string: "\(formattedDuration)", attributes: [NSAttributedString.Key.font: UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.bold17!)])
@@ -129,5 +123,14 @@ struct ActivitySessionViewModel {
             default:
                 return ""
         }
+    }
+    
+    // MARK: - Helpers
+    func conciseDurationForTime(duration: Int16) -> String {
+        let elapsedTimeInSeconds = duration
+        let seconds = elapsedTimeInSeconds % 60
+        let minutes = (elapsedTimeInSeconds / 60) % 60
+        let hours = elapsedTimeInSeconds / 3600
+        return hours == 0 ? String(format: "%2d:%02d", minutes, seconds) : String(format: "%2d:%02d:%02d", hours, minutes, seconds)
     }
 }

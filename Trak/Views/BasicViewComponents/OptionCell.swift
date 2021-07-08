@@ -38,14 +38,14 @@ class OptionCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.medium13!)
         label.adjustsFontForContentSizeCategory = true
-        label.textColor = UIColor(named: "InvertedDarkMode")
+        label.textColor = UIColor.InvertedDarkMode
         return label
     }()
     
     private let iconImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.tintColor = UIColor(named: "InvertedDarkMode")
+        iv.tintColor = UIColor.InvertedDarkMode
         return iv
     }()
     
@@ -53,16 +53,20 @@ class OptionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
+        layoutUI()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         backgroundColor = .clear
         addBlurBackground(withStyle: .systemUltraThinMaterial)
+    }
+    
+    private func layoutUI() {
         addSubview(iconImageView)
         iconImageView.setDimension(width: heightAnchor, height: heightAnchor, wMult: 0.4, hMult: 0.4)
         iconImageView.center(y: centerYAnchor)

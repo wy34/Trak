@@ -18,7 +18,7 @@ class DarkModeVC: UIViewController {
         let tv = UITableView(frame: .zero, style: .insetGrouped)
         tv.delegate = self
         tv.dataSource = self
-        tv.backgroundColor = UIColor(named: "StandardDarkMode")
+        tv.backgroundColor = UIColor.StandardDarkMode
         tv.register(UITableViewCell.self, forCellReuseIdentifier: lightDarkCellId)
         tv.register(AutomaticDarkModeCell.self, forCellReuseIdentifier: AutomaticDarkModeCell.reuseId)
         tv.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
@@ -29,18 +29,18 @@ class DarkModeVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(showHideTableViewSection), name: Notification.Name.didSwitchAutomaticDarkMode, object: nil)
         setupVisibleSections()
+        setupNotificationObservers()
         configureSmallNavBar(withTitle: "Dark Mode".localized())
     }
     
-    // MARK: - UI
     override func viewDidLayoutSubviews() {
         view.addSubview(tableView)
         tableView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
     }
     
-    func setupVisibleSections() {
+    // MARK: - Helpers
+    private func setupVisibleSections() {
         let displayIndex = UserDefaults.standard.integer(forKey: darkModeUDKey)
         
         switch displayIndex {
@@ -53,7 +53,11 @@ class DarkModeVC: UIViewController {
         }
     }
     
-    // MARK: - Selector
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(showHideTableViewSection), name: Notification.Name.didSwitchAutomaticDarkMode, object: nil)
+    }
+    
+    // MARK: - Selectors
     @objc func showHideTableViewSection() {
         isAutomatic.toggle()
         
@@ -97,7 +101,7 @@ extension DarkModeVC: UITableViewDelegate, UITableViewDataSource {
             case (1, 0), (1, 1):
                 let cell = tableView.dequeueReusableCell(withIdentifier: lightDarkCellId, for: indexPath)
                 cell.textLabel?.text = indexPath.row == 0 ? "Light Mode".localized() : "Dark Mode".localized()
-                cell.backgroundColor = UIColor(named: "SettingsCellColor")!
+                cell.backgroundColor = UIColor.SettingsCellColor
                 cell.textLabel?.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.bold16!)
                 cell.accessoryType = UITraitCollection.current.userInterfaceStyle == (indexPath.row == 0 ? .light : .dark) ? .checkmark : .none
                 if isAutomatic { cell.isHidden  = true }

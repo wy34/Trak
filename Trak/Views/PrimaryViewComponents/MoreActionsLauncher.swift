@@ -40,10 +40,10 @@ class MoreActionsLauncher: NSObject {
     
     private let tableView: UITableView = {
         let tv = UITableView()
-        tv.backgroundColor = UIColor(named: "MenuDarkMode")!.withAlphaComponent(0.75)
+        tv.backgroundColor = UIColor.MenuDarkMode.withAlphaComponent(0.75)
         tv.register(OptionCell.self, forCellReuseIdentifier: OptionCell.reuseId)
         tv.isScrollEnabled = false
-        tv.separatorColor = UIColor(named: "InvertedDarkMode")!.withAlphaComponent(0.15)
+        tv.separatorColor = UIColor.InvertedDarkMode.withAlphaComponent(0.15)
         tv.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         tv.layer.cornerRadius = 20
         return tv
@@ -56,7 +56,7 @@ class MoreActionsLauncher: NSObject {
         tableView.dataSource = self
     }
     
-    
+    // MARK: - Helpers
     func showMoreActionsMenu() {
         if let window = window {
             window.addSubview(blackView)
@@ -74,7 +74,7 @@ class MoreActionsLauncher: NSObject {
         }
     }
     
-    func handleCompletion(atIndexPath indexPath: IndexPath) {
+    private func handleCompletion(atIndexPath indexPath: IndexPath) {
         if let _ = summaryVC {
             let action = moreActions[indexPath.row]
             if action.title != .Cancel {
@@ -88,6 +88,7 @@ class MoreActionsLauncher: NSObject {
         }
     }
     
+    // MARK: - Selectors
     @objc func handleDismiss() {
         UIView.animate(withDuration: 0.5) {
             self.blackView.alpha = 0
@@ -102,7 +103,7 @@ class MoreActionsLauncher: NSObject {
 extension MoreActionsLauncher: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel.createHeaderLabel(withTitle: summaryVC != nil ? "Activity Options".localized() : "Camera Options".localized(), andFont: UIFont.bold12)
-        label.addBorder(toSide: .bottom, withColor: UIColor(named: "InvertedDarkMode")!.withAlphaComponent(0.05), andDimension: 1.5)
+        label.addBorder(toSide: .bottom, withColor: UIColor.InvertedDarkMode.withAlphaComponent(0.05), andDimension: 1.5)
         return label
     }
     

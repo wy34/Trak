@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol Button3DDelegate: class {
+protocol Button3DDelegate: AnyObject {
     func handleUnitSwitch(isDown: Bool)
 }
 
@@ -34,20 +34,20 @@ class Button3D: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        layoutViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
   
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
         layer.cornerRadius = 5
-        layoutViews()
     }
 
-    func layoutViews() {
+    private func layoutViews() {
         addSubview(button)
         button.setDimension(width: widthAnchor, height: heightAnchor, wMult: 0.9, hMult: 0.9)
         button.center(x: centerXAnchor)

@@ -33,7 +33,7 @@ class OnboardingVC: UIViewController {
         let pc = UIPageControl()
         pc.currentPage = 0
         pc.numberOfPages = onboardingItems.count + 1
-        pc.currentPageIndicatorTintColor = UIColor(named: "InvertedDarkMode")
+        pc.currentPageIndicatorTintColor = UIColor.InvertedDarkMode
         pc.pageIndicatorTintColor = .systemGray4
         pc.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)
         pc.isUserInteractionEnabled = false
@@ -43,8 +43,8 @@ class OnboardingVC: UIViewController {
     lazy var nextButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Next".localized(), for: .normal)
-        button.backgroundColor = UIColor(named: "OnboardingButton")
-        button.setTitleColor(UIColor(named: "InvertedDarkMode"), for: .normal)
+        button.backgroundColor = UIColor.OnboardingButton
+        button.setTitleColor(UIColor.InvertedDarkMode, for: .normal)
         button.titleLabel?.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.bold18!)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.addTarget(self, action: #selector(scrollToNextPage), for: .touchUpInside)
@@ -54,12 +54,12 @@ class OnboardingVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "StandardDarkMode")
         configureUI()
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
+        view.backgroundColor = UIColor.StandardDarkMode
         scrollView.delegate = self
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.frame = view.bounds
@@ -79,7 +79,7 @@ class OnboardingVC: UIViewController {
         pageControl.anchor(right: view.rightAnchor, bottom: nextButton.topAnchor)
     }
     
-    func createPages() {
+    private func createPages() {
         for x in 0..<onboardingItems.count + 1 {
             if x < 3 {
                 let pageView = OnboardingPage(frame: CGRect(x: CGFloat(x) * view.frame.size.width, y: 0, width: view.frame.size.width, height: view.frame.size.height))
@@ -135,7 +135,7 @@ extension OnboardingVC: UIScrollViewDelegate {
             nextButton.setTitleColor(.systemGreen, for: .normal)
         } else {
             nextButton.setTitle("Next".localized(), for: .normal)
-            nextButton.setTitleColor(UIColor(named: "InvertedDarkMode"), for: .normal)
+            nextButton.setTitleColor(UIColor.InvertedDarkMode, for: .normal)
         }
     }
 }

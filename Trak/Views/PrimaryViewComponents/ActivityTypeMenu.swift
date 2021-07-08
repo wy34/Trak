@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol ActivityTypeMenuDelegate: class {
+protocol ActivityTypeMenuDelegate: AnyObject {
     func handleMenu(isOpen: Bool, withType type: ActivityType)
 }
 
@@ -39,6 +39,7 @@ class ActivityTypeMenu: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        layoutUI()
         setupButtonTargets()
     }
     
@@ -47,15 +48,18 @@ class ActivityTypeMenu: UIView {
     }
     
     // MARK: - Helpers
-    func configureUI() {
+    private func configureUI() {
         layer.borderColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 0.5)
         layer.borderWidth = 1
         layer.cornerRadius = 5
+    }
+    
+    private func layoutUI() {
         addSubview(buttonStack)
         buttonStack.anchor(top: topAnchor, right: rightAnchor, bottom: bottomAnchor, left: leftAnchor, paddingTop: 5, paddingRight: 5, paddingBottom: 5, paddingLeft: 5)
     }
     
-    func setupButtonTargets() {
+    private func setupButtonTargets() {
         openCloseMenuButton.addTarget(self, action: #selector(handleOpenCloseMenu), for: .touchUpInside)
         runMenuButton.addTarget(self, action: #selector(handleRunMenu), for: .touchUpInside)
         walkMenuButton.addTarget(self, action: #selector(handleWalkMenu), for: .touchUpInside)
@@ -88,7 +92,7 @@ class ActivityTypeMenu: UIView {
         }
     }
     
-    func handle(buttonTapped: ActivityTypeMenuButton) {
+    private func handle(buttonTapped: ActivityTypeMenuButton) {
         if isMenuOpen == false {
             isMenuOpen = true
             UIView.animate(withDuration: 0.3) {

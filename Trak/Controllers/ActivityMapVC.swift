@@ -86,10 +86,9 @@ class ActivityMapVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        layoutViews()
         setupMapDragGesture()
-        musicPlayer.prepareToPlay()
-        musicPlayer.setQueue(with: .songs())
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+        setupMusicPlayer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -97,16 +96,15 @@ class ActivityMapVC: UIViewController {
         self.locationManager = locationManager
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         edgesForExtendedLayout = []
-        view.backgroundColor = UIColor(named: "StandardDarkMode")
+        view.backgroundColor = UIColor.StandardDarkMode
         updateLocationButtonImage(to: "location")
-        layoutViews()
         statsView.delegate = self
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         view.addSubviews(topBlueBorderLine, mapView, locationButton, musicPlayerButton, musicLibraryButton, slideOutView, statsView, loadView)
         
         topBlueBorderLine.anchor(top: view.safeAreaLayoutGuide.topAnchor, right: view.rightAnchor, left: view.leftAnchor)
@@ -134,7 +132,6 @@ class ActivityMapVC: UIViewController {
         loadView.alpha = 0
     }
     
-    // MARK: - Location/Map
     func checkLocationServices() {
         if CLLocationManager.locationServicesEnabled() {
             locationManager = CLLocationManager()
@@ -144,7 +141,7 @@ class ActivityMapVC: UIViewController {
         }
     }
     
-    func checkAuthStatus() {
+    private func checkAuthStatus() {
         switch locationManager.authorizationStatus {
             case .notDetermined:
                 presentOnboardingOrPermission()
@@ -161,7 +158,7 @@ class ActivityMapVC: UIViewController {
         }
     }
     
-    func presentOnboardingOrPermission() {
+    private func presentOnboardingOrPermission() {
         if OnboardingStatus.shared.isNewUser() {
             let onboarding = OnboardingVC()
             onboarding.activityMapVC = self
@@ -186,25 +183,25 @@ class ActivityMapVC: UIViewController {
         }
     }
     
-    func showUserLocation() {
+    private func showUserLocation() {
         statsView.buttonStack.isUserInteractionEnabled = true
         mapView.showsUserLocation = true
         zoomAndCenterUserLocation()
     }
     
-    func updateLocationButtonImage(to image: String) {
+    private func updateLocationButtonImage(to image: String) {
         let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 12))
         locationButton.setImage(UIImage(systemName: image, withConfiguration: imageConfig), for: .normal)
     }
     
-    func zoomAndCenterUserLocation() {
+    private func zoomAndCenterUserLocation() {
         guard let userLocation =  locationManager?.location else { return }
         let region = MKCoordinateRegion(center: userLocation.coordinate, latitudinalMeters: 500, longitudinalMeters: 500)
         mapView.setRegion(region, animated: true)
         updateLocationButtonImage(to: "location.fill")
     }
     
-    func disableButtons() {
+    private func disableButtons() {
         locationButton.isEnabled = false
         statsView.buttonStack.isUserInteractionEnabled = false
         let alert = UIAlertController(title: "Location Service Disabled", message: "If you want to track your activities, please go to Settings > Trak > Location and allow track to use your location.", preferredStyle: .alert)
@@ -215,13 +212,13 @@ class ActivityMapVC: UIViewController {
         present(alert, animated: true)
     }
     
-    func setupMapDragGesture() {
+    private func setupMapDragGesture() {
         let mapDragRecognizer = UIPanGestureRecognizer(target: self, action: #selector(didDragMap))
         mapDragRecognizer.delegate = self
         self.mapView.addGestureRecognizer(mapDragRecognizer)
     }
     
-    func addPolyline(at coordinate: CLLocationCoordinate2D) {
+    private func addPolyline(at coordinate: CLLocationCoordinate2D) {
         if timerStatus != .Paused {
             self.activeLocations.append(coordinate)
         } else {
@@ -233,7 +230,7 @@ class ActivityMapVC: UIViewController {
         self.mapView.addOverlay(polyline)
     }
     
-    func calculateDistance(toLatestLocation latestLocation: CLLocation) -> CLLocationDistance {
+    private func calculateDistance(toLatestLocation latestLocation: CLLocation) -> CLLocationDistance {
         if activeLocations.count >= 2 {
             let prevCoordinate = self.activeLocations[self.activeLocations.count - 2]
             let prevLocation = CLLocation(latitude: prevCoordinate.latitude, longitude: prevCoordinate.longitude)
@@ -245,14 +242,14 @@ class ActivityMapVC: UIViewController {
         return 0
     }
     
-    func convertViewToImage() -> UIImage? {
+    private func convertViewToImage() -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(mapView.frame.size, mapView.isOpaque, 0.0)
         defer { UIGraphicsEndImageContext() }
         mapView.drawHierarchy(in: mapView.bounds, afterScreenUpdates: true)
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    func takeSnapshot() {
+    private func takeSnapshot() {
         guard let snapshotWithOverlays = convertViewToImage() else { return }
         let activitySession = CoreDataManager.shared.createActivity(withSnapshot: snapshotWithOverlays, duration: ActivityTimer.shared.elapsedTimeInSeconds, pausedDuration: ActivityTimer.shared.pausedTimeInSeconds, distance: self.totalActiveDistance, pausedDistance: totalPausedDistance, coordinates: allLocations)
         let summaryView = SummaryViewController()
@@ -270,18 +267,7 @@ class ActivityMapVC: UIViewController {
         }
     }
     
-    @objc func goBackToUserLocation() {locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
-        zoomAndCenterUserLocation()
-    }
-    
-    @objc func didDragMap(gesture: UIPanGestureRecognizer) {
-        if gesture.state == .began {
-            updateLocationButtonImage(to: "location")
-        }
-    }
-    
-    // MARK: - Music Player functions
-    func showView() {
+    private func showView() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.mapView.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 0.79, y: 0)
             self.locationButton.transform = CGAffineTransform(translationX: UIScreen.main.bounds.width * 0.8, y: 0)
@@ -292,7 +278,7 @@ class ActivityMapVC: UIViewController {
         }
     }
     
-    func closeView() {
+    private func closeView() {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
             self.slideOutView.transform = .identity
             self.mapView.transform = .identity
@@ -300,6 +286,29 @@ class ActivityMapVC: UIViewController {
             let imageConfig = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 14))
             self.musicPlayerButton.setImage(UIImage(systemName: "music.note", withConfiguration: imageConfig), for: .normal)
             self.mapView.isUserInteractionEnabled = true
+        }
+    }
+    
+    private func setupMusicPlayer() {
+        musicPlayer.prepareToPlay()
+        musicPlayer.setQueue(with: .songs())
+    }
+    
+    private func displayMusicButtons(withAlpha a: CGFloat) {
+        UIView.animate(withDuration: 0.5) {
+            self.musicPlayerButton.alpha = a
+            self.musicLibraryButton.alpha = a
+        }
+    }
+    
+    // MARK: - Selectors
+    @objc func goBackToUserLocation() {locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        zoomAndCenterUserLocation()
+    }
+    
+    @objc func didDragMap(gesture: UIPanGestureRecognizer) {
+        if gesture.state == .began {
+            updateLocationButtonImage(to: "location")
         }
     }
     
@@ -315,9 +324,7 @@ class ActivityMapVC: UIViewController {
     @objc func didSlideView(gesture: UIPanGestureRecognizer) {
         let translation = gesture.translation(in: self.view)
         
-        if gesture.state == .began {
-            print("began")
-        } else if gesture.state == .changed && translation.x < 0 {
+        if gesture.state == .changed && translation.x < 0 {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseOut) {
                 self.slideOutView.transform = CGAffineTransform(translationX: translation.x + UIScreen.main.bounds.width * 0.8, y: 0)
                 self.locationButton.transform = CGAffineTransform(translationX: translation.x + UIScreen.main.bounds.width * 0.8, y: 0)
@@ -342,13 +349,6 @@ class ActivityMapVC: UIViewController {
         musicPickerController.popoverPresentationController?.sourceView = musicLibraryButton
         musicPickerController.delegate = self
         present(musicPickerController, animated: true, completion: nil)
-    }
-    
-    func displayMusicButtons(withAlpha a: CGFloat) {
-        UIView.animate(withDuration: 0.5) {
-            self.musicPlayerButton.alpha = a
-            self.musicLibraryButton.alpha = a
-        }
     }
 }
 

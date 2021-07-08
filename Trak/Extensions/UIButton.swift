@@ -65,13 +65,13 @@ extension UIButton {
     
     static func createMapButtons(withImage image: String) -> UIButton {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor(named: "StandardDarkMode")
+        button.backgroundColor = UIColor.StandardDarkMode
         button.layer.shadowColor = UIColor(white: 0.25, alpha: 0.75).cgColor
         button.layer.shadowOpacity = 1
         button.layer.shadowRadius = 1
         button.layer.shadowOffset = CGSize(width: 2, height: 2)
         button.layer.cornerRadius = 12
-        button.tintColor = UIColor(named: "InvertedDarkMode")
+        button.tintColor = UIColor.InvertedDarkMode
         button.setImage(UIImage(systemName: image), for: .normal)
         return button
     }
@@ -87,12 +87,12 @@ extension UIButton {
         }
         
         button.setImage(UIImage(systemName: image, withConfiguration: config), for: .normal)
-        button.tintColor = UIColor(named: "InvertedDarkMode")
+        button.tintColor = UIColor.InvertedDarkMode
         return button
     }
     
     static func createScrollButtons(withImage img: String, andTag tag: Int) -> UIButton {
-        let button = UIButton.createControlButtons(withImage: img, andTintColor: UIColor(named: "InvertedDarkMode")!.withAlphaComponent(0.15))
+        let button = UIButton.createControlButtons(withImage: img, andTintColor: UIColor.InvertedDarkMode.withAlphaComponent(0.15))
         button.tag = tag
         button.isHidden = tag == 1 ? true : false
         return button

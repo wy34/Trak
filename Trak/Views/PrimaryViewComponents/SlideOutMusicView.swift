@@ -51,8 +51,8 @@ class SlideOutMusicView: UIView {
         return stack
     }()
     
-    private let elapsedTimeLabel = UILabel.createLabel(withTitle: " 0:00", textColor: UIColor(named: "InvertedDarkMode"), font: UIFont.bold12, andAlignment: .left)
-    private let totalTimeLabel = UILabel.createLabel(withTitle: "0:00", textColor: UIColor(named: "InvertedDarkMode"), font: UIFont.bold12, andAlignment: .right)
+    private let elapsedTimeLabel = UILabel.createLabel(withTitle: " 0:00", textColor: UIColor.InvertedDarkMode, font: UIFont.bold12, andAlignment: .left)
+    private let totalTimeLabel = UILabel.createLabel(withTitle: "0:00", textColor: UIColor.InvertedDarkMode, font: UIFont.bold12, andAlignment: .right)
     
     private let scrubber: UISlider = {
         let slider = UISlider()
@@ -91,9 +91,9 @@ class SlideOutMusicView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        layoutViews()
+        setupNotificationObservers()
         setupMusicControlTargets()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleMusicPlayerBeginPlaying), name: Notification.Name.musicPlayerStartStopPlaying, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(handleSongChanged), name: .MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
         setupDefaultMusicPlayerSong()
     }
     
@@ -101,9 +101,9 @@ class SlideOutMusicView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI() {
-        backgroundColor = UIColor(named: "MusicPlayerDarkMode")
+    // MARK: - Helpers
+    private func configureUI() {
+        backgroundColor = UIColor.MusicPlayerDarkMode
         layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         layer.masksToBounds = true
         layer.cornerRadius = 10
@@ -115,10 +115,9 @@ class SlideOutMusicView: UIView {
         artistLabel.animationDelay = 3
         artistLabel.text = "---"
         artistLabel.font = UIFont.light12
-        layoutViews()
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         let containerView = UIView()
         let menuHandle = UIView()
         menuHandle.backgroundColor = .systemGray3
@@ -148,7 +147,12 @@ class SlideOutMusicView: UIView {
         menuHandle.anchor(right: rightAnchor, paddingRight: 5)
     }
     
-    func setupNameAndTitle() {
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleMusicPlayerBeginPlaying), name: Notification.Name.musicPlayerStartStopPlaying, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleSongChanged), name: .MPMusicPlayerControllerNowPlayingItemDidChange, object: nil)
+    }
+    
+    private func setupNameAndTitle() {
         guard let name = musicPlayer.nowPlayingItem?.artist, let title = musicPlayer.nowPlayingItem?.title else { return }
         guard let artwork = musicPlayer.nowPlayingItem?.artwork else { return }
         let image = artwork.image(at: CGSize(width: songCoverImageView.frame.width, height: songCoverImageView.frame.height))
@@ -157,14 +161,14 @@ class SlideOutMusicView: UIView {
         titleLabel.text = title + "          "
     }
     
-    func setupTotalTimeLabel() {
+    private func setupTotalTimeLabel() {
         guard let totalDuration = musicPlayer.nowPlayingItem?.playbackDuration else { return }
         let maxMinutes = Int(totalDuration.rounded()) / 60
         let maxSeconds = Int(totalDuration.rounded()) % 60
         totalTimeLabel.text = String(format: "%2d:%02d", maxMinutes, maxSeconds)
     }
     
-    func startingPeriodicTimeOberver() {
+    private func startingPeriodicTimeOberver() {
         guard let totalDuration = musicPlayer.nowPlayingItem?.playbackDuration else { return }
         playBackTimer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] (_) in
             guard let elapsedTime = self?.musicPlayer.currentPlaybackTime else { return }
@@ -176,7 +180,7 @@ class SlideOutMusicView: UIView {
         }
     }
     
-    func updatePlayPauseButton() {
+    private func updatePlayPauseButton() {
         let config = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: UIScreen.main.bounds.height <= 736 ? 18 : 24))
         
         if musicPlayer.playbackState == .paused {
@@ -196,12 +200,12 @@ class SlideOutMusicView: UIView {
         }
     }
     
-    func invalidateTimer() {
+    private func invalidateTimer() {
         playBackTimer?.invalidate()
         playBackTimer = nil
     }
     
-    func setupDefaultMusicPlayerSong() {
+    private func setupDefaultMusicPlayerSong() {
         setupNameAndTitle()
         if musicPlayer.playbackState.rawValue == 1 { startingPeriodicTimeOberver() }
         setupTotalTimeLabel()
@@ -209,13 +213,13 @@ class SlideOutMusicView: UIView {
         updatePlayPauseButton()
     }
     
-    func setupMusicControlTargets() {
+    private func setupMusicControlTargets() {
         prevButton.addTarget(self, action: #selector(handlePrevTapped), for: .touchUpInside)
         nextButton.addTarget(self, action: #selector(handleNextTapped), for: .touchUpInside)
         playPauseButton.addTarget(self, action: #selector(handlePlayPause), for: .touchUpInside)
     }
     
-    // MARK: - Selector
+    // MARK: - Selectors
     @objc func handlePlayPause() {
         hapticFeedback.impactOccurred()
         

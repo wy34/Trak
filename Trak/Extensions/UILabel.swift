@@ -12,14 +12,14 @@ extension UILabel {
         let label = UILabel()
         label.text = title
         label.textAlignment = .center
-        label.textColor = UIColor(named: "InvertedDarkMode")
+        label.textColor = UIColor.InvertedDarkMode
         label.adjustsFontSizeToFitWidth = true
         label.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: font!)
         label.adjustsFontForContentSizeCategory = true
         return label
     }
     
-    static func createCaptionLabel(withTitle title: String, withColor color: UIColor = UIColor(named: "InvertedDarkMode")!, aligned align: NSTextAlignment? = nil) -> UILabel {
+    static func createCaptionLabel(withTitle title: String, withColor color: UIColor = UIColor.InvertedDarkMode, aligned align: NSTextAlignment? = nil) -> UILabel {
         let label = UILabel()
         label.text = title
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
@@ -44,7 +44,7 @@ extension UILabel {
         return label
     }
     
-    static func createSnapshotOverlayLabels(withColor color: UIColor = UIColor(named: "StandardDarkMode")!) -> UILabel {
+    static func createSnapshotOverlayLabels(withColor color: UIColor = UIColor.StandardDarkMode) -> UILabel {
         let label = UILabel()
         label.textAlignment = .center
         label.textColor = color
@@ -58,7 +58,7 @@ extension UILabel {
         let label = UILabel()
         label.text = title
         label.textAlignment = .center
-        label.textColor = UIColor(named: "InvertedDarkMode")
+        label.textColor = UIColor.InvertedDarkMode
         label.numberOfLines = 0
         label.backgroundColor = .systemGray6
         label.font = font

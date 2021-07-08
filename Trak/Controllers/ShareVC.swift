@@ -29,7 +29,7 @@ class ShareViewController: UIViewController {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(ShareOptionCell.self, forCellWithReuseIdentifier: ShareOptionCell.reuseId)
-        cv.backgroundColor = UIColor(named: "StandardDarkMode")
+        cv.backgroundColor = UIColor.StandardDarkMode
         cv.delegate = self
         cv.dataSource = self
         return cv
@@ -39,6 +39,7 @@ class ShareViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        layoutViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,18 +51,18 @@ class ShareViewController: UIViewController {
             }
         }
     }
-    // MARK: - UI
-    func configureUI() {
+    
+    // MARK: - Helpers
+    private func configureUI() {
         edgesForExtendedLayout = []
         let dismissButton = UIBarButtonItem(title: "Dismiss".localized(), style: .plain, target: self, action: #selector(dismissShareVC))
         let textAttributes = [NSAttributedString.Key.font: UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.medium17!)]
         dismissButton.setTitleTextAttributes(textAttributes, for: .normal)
         navigationItem.leftBarButtonItem = dismissButton
-        view.backgroundColor = UIColor(named: "StandardDarkMode")
-        layoutViews()
+        view.backgroundColor = UIColor.StandardDarkMode
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         view.addSubviews(shareWindowView, blueBorderLine, mapSnapshotView)
                 
         shareWindowView.setDimension(height: view.heightAnchor, hMult: 0.4)
@@ -82,15 +83,14 @@ class ShareViewController: UIViewController {
         shareCollectionView.center(to: shareWindowView, by: .centerY, withMultiplierOf: 1.15)
     }
     
-    // MARK: - Sharing
-    func showActivityViewController() {
+    private func showActivityViewController() {
         guard let image = convertViewToImage() else { return }
         let avc = UIActivityViewController(activityItems: [image], applicationActivities: nil)
         avc.popoverPresentationController?.sourceView = shareCollectionView
         present(avc, animated: true, completion: nil)
     }
     
-    func convertViewToImage() -> UIImage? {
+    private func convertViewToImage() -> UIImage? {
         let side = view.frame.size.width * 0.8
         UIGraphicsBeginImageContextWithOptions(CGSize(width: side, height: side), mapSnapshotView.isOpaque, 0.0)
         defer { UIGraphicsEndImageContext() }
@@ -98,12 +98,12 @@ class ShareViewController: UIViewController {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
     
-    func saveToPhotoLibrary() {
+    private func saveToPhotoLibrary() {
         guard let image = convertViewToImage() else { return }
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
-    func launchMessageComposeVC(image: UIImage) {
+    private func launchMessageComposeVC(image: UIImage) {
         if MFMessageComposeViewController.canSendText() {
             let messageVC = MFMessageComposeViewController()
             messageVC.messageComposeDelegate = self
@@ -111,7 +111,7 @@ class ShareViewController: UIViewController {
             messageVC.addAttachmentData(imageData!, typeIdentifier: "public.data", filename: "image.png")
             self.present(messageVC, animated: true, completion: nil)
         } else {
-            print("User does not have the messages app.".localized())
+            debugPrint("User does not have the messages app.".localized())
         }
     }
     
@@ -126,7 +126,7 @@ class ShareViewController: UIViewController {
     
     @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
         if let error = error {
-            print(error)
+            debugPrint(error)
             let ac = UIAlertController(title: "Save Error".localized(), message: error.localizedDescription, preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK".localized(), style: .default, handler: nil))
             present(ac, animated: true)
@@ -163,7 +163,7 @@ extension ShareViewController: UICollectionViewDelegate, UICollectionViewDataSou
             case 0: launchMessageComposeVC(image: image)
             case 1: saveToPhotoLibrary()
             case 2: showActivityViewController()
-            default: print("other")
+            default: debugPrint("other")
         }
     }
     

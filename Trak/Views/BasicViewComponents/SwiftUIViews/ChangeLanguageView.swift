@@ -17,18 +17,18 @@ struct ChangeLanguageView: View {
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
                     Text("How to Change App Language".localized())
-                        .font(.custom("MADETommySoft-Bold", size: 28, relativeTo: .body))
+                        .font(.custom(TrakFontStyle.bold.rawValue, size: 28, relativeTo: .body))
                         .lineLimit(2)
                         .padding(.bottom, 5)
                     Group {
                         Text("Method 1: System-wide Change".localized())
-                            .font(.custom("MADETommySoft-Medium", size: 16, relativeTo: .body))
+                            .font(.custom(TrakFontStyle.medium.rawValue, size: 16, relativeTo: .body))
                             .underline()
                         Text("1. Open the Settings App".localized())
                         Text("2. General -> Language & Region".localized())
                         Text("3. Change Preferred iPhone Language".localized())
                     }
-                    .font(.custom("MADETommySoft-Light", size: 16, relativeTo: .body))
+                    .font(.custom(TrakFontStyle.light.rawValue, size: 16, relativeTo: .body))
                     .padding(.top, 5)
                 }
                 .padding(.leading, 25)
@@ -42,35 +42,35 @@ struct ChangeLanguageView: View {
                 VStack(alignment: .leading) {
                     Group {
                         Text("Method 2: App-only Change".localized())
-                            .font(.custom("MADETommySoft-Medium", size: 16, relativeTo: .body))
+                            .font(.custom(TrakFontStyle.medium.rawValue, size: 16, relativeTo: .body))
                             .underline()
                         Text("1. Open the Settings App".localized())
                         Text("2. Scroll down until you find Trak".localized())
                         Text("3. Change the Preferred Language".localized())
                     }
-                    .font(.custom("MADETommySoft-Light", size: 16, relativeTo: .body))
+                    .font(.custom(TrakFontStyle.light.rawValue, size: 16, relativeTo: .body))
                     .padding(.bottom, 5)
                 }
                 .padding(.leading, 25)
                 VStack(alignment: .leading) {
                     Text("Tip: Click shortcut link below".localized())
                         .lineLimit(2)
-                        .font(.custom("MADETommySoft-Light", size: 12, relativeTo: .body))
+                        .font(.custom(TrakFontStyle.light.rawValue, size: 12, relativeTo: .body))
                         .padding(.bottom, -1)
                     Button(action: { UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!) }) {
                         HStack {
                             Text("Open App Settings".localized())
                                 .lineLimit(1)
-                                .font(.custom("MADETommySoft-Medium", size: 16, relativeTo: .body))
+                                .font(.custom(TrakFontStyle.medium.rawValue, size: 16, relativeTo: .body))
                                 .minimumScaleFactor(0.5)
                             Spacer()
                             Image(systemName: "arrow.up.forward.app")
                         }
-                        .foregroundColor(Color("InvertedDarkMode"))
+                        .foregroundColor(Color(UIColor.InvertedDarkMode))
                         .padding(.horizontal, 10)
                     }
                     .frame(height: 40)
-                    .background(Color("InvertedDarkMode").opacity(0.1))
+                    .background(Color(UIColor.InvertedDarkMode).opacity(0.1))
                     .cornerRadius(10)
                 }
                 .padding([.trailing, .leading], 25)
@@ -78,7 +78,7 @@ struct ChangeLanguageView: View {
             }
             .padding(.vertical, 25)
         }
-        .background(Color("StandardDarkMode"))
+        .background(Color(UIColor.StandardDarkMode))
         .edgesIgnoringSafeArea(.vertical)
     }
 }

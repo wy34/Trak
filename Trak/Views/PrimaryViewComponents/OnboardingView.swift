@@ -33,7 +33,7 @@ class OnboardingPage: UIView {
         return iv
     }()
     
-    private let titleLabel = UILabel.createLabel(withTitle: "", textColor: UIColor(named: "InvertedDarkMode"), font: UIFont.bold28, andAlignment: .center)
+    private let titleLabel = UILabel.createLabel(withTitle: "", textColor: UIColor.InvertedDarkMode, font: UIFont.bold28, andAlignment: .center)
     private let descriptionLabel = UILabel.createLabel(withTitle: "", textColor: .systemGray, font: UIFont.bold14, andAlignment: .center)
     
     private lazy var labelStack: UIStackView = {
@@ -46,22 +46,22 @@ class OnboardingPage: UIView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        backgroundColor = UIColor(named: "StandardDarkMode")
-        self.frame = frame
-        layoutViews()
         configureUI()
+        layoutViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
+        backgroundColor = UIColor.StandardDarkMode
+        self.frame = frame
         descriptionLabel.numberOfLines = 5
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         addSubviews(imageView, labelStack)
         
         imageView.setDimension(width: widthAnchor, height: widthAnchor, wMult: 0.45, hMult: 0.45)

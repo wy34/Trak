@@ -30,26 +30,26 @@ class BasicSettingsCell: UITableViewCell {
         return iv
     }()
     
-    private let settingsLabel = UILabel.createLabel(withTitle: "Notifications", textColor: UIColor(named: "InvertedDarkMode"), font: UIFont.medium16, andAlignment: .left)
+    private let settingsLabel = UILabel.createLabel(withTitle: "", textColor: UIColor.InvertedDarkMode, font: UIFont.medium16, andAlignment: .left)
     
     // MARK: - Init
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
+        layoutViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI() {
+    // MARK: - Helpers
+    private func configureUI() {
         view.layer.cornerRadius = 8
-        backgroundColor = UIColor(named: "SettingsCellColor")
-        layoutViews()
+        backgroundColor = UIColor.SettingsCellColor
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         addSubviews(view, iconImageView, settingsLabel)
         
         view.setDimension(width: heightAnchor, height: heightAnchor, wMult: 0.5, hMult: 0.5)

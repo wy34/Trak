@@ -70,6 +70,7 @@ class MapSnapshotView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        layoutUI()
         setupGradient()
     }
     
@@ -78,23 +79,25 @@ class MapSnapshotView: UIView {
     }
     
     override func layoutSubviews() {
-           super.layoutSubviews()
-           gradientLayer.frame = bounds
-       }
-    
+       super.layoutSubviews()
+       gradientLayer.frame = bounds
+   }
+
     // MARK: - Helper
-    func configureUI() {
-        addSubviews(snapShotMapView, activeStack)
-        snapShotMapView.anchor(top: topAnchor, right: rightAnchor, bottom: bottomAnchor, left: leftAnchor)
-        
-        activeStack.anchor(right: rightAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, left: leftAnchor,  paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
-        
+    private func configureUI() {
         layer.shadowColor = UIColor(white: 0.25, alpha: 0.5).cgColor
         layer.shadowOpacity = 1
         layer.shadowRadius = 5
     }
     
-    func setupGradient() {
+    private func layoutUI() {
+        addSubviews(snapShotMapView, activeStack)
+        snapShotMapView.anchor(top: topAnchor, right: rightAnchor, bottom: bottomAnchor, left: leftAnchor)
+        
+        activeStack.anchor(right: rightAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, left: leftAnchor,  paddingRight: 15, paddingBottom: 15, paddingLeft: 15)
+    }
+    
+    private func setupGradient() {
         gradientLayer.type = .axial
         gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
@@ -104,7 +107,7 @@ class MapSnapshotView: UIView {
         layer.addSublayer(gradientLayer)
     }
     
-    func drawPolyline(withCoordinates coordinates: [Int: [[Double]]]) {
+    private func drawPolyline(withCoordinates coordinates: [Int: [[Double]]]) {
         let coordinatesArray = snapShotMapView.convertCoordinateDictionaryToCoordinateArrays(coordinates: coordinates)
 
         // drawing on polylines

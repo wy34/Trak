@@ -28,7 +28,7 @@ class AuthenciationToggleCell: BasicSettingsCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
+    // MARK: - Helpers
     override func layoutSubviews() {
         addSubview(toggle)
         toggle.frame = CGRect(x: 0, y: 0, width: frame.width * 0.1, height: 10)

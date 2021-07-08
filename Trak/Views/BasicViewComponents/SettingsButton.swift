@@ -27,17 +27,21 @@ class SettingsButton: UIButton {
     // MARK: - Init
     init(withTitle title: String, andImage image: String) {
         super.init(frame: .zero)
+        configureUI(buttonTitle: title, buttonImage: image)
         layoutViews()
-        buttonLabel.text = title
-        buttonImageView.image = UIImage(systemName: image)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func layoutViews() {
+    // MARK: - Helpers
+    private func configureUI(buttonTitle: String, buttonImage: String) {
+        buttonLabel.text = buttonTitle
+        buttonImageView.image = UIImage(systemName: buttonImage)
+    }
+    
+    private func layoutViews() {
         addSubviews(buttonImageView, buttonLabel)
         
         buttonImageView.center(to: self, by: .centerX)

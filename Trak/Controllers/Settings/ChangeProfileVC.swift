@@ -29,7 +29,7 @@ class ChangeProfileVC: UIViewController {
         label.numberOfLines = 2
         label.lineBreakMode = .byTruncatingTail
         label.textAlignment = .center
-        label.textColor = UIColor(named: "InvertedDarkMode")
+        label.textColor = UIColor.InvertedDarkMode
         label.adjustsFontForContentSizeCategory = true
         label.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.bold24!)
         label.isUserInteractionEnabled = true
@@ -51,8 +51,7 @@ class ChangeProfileVC: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "StandardDarkMode")
-        configureSmallNavBar(withTitle: "Profile".localized())
+        configureUI()
         layoutViews()
         animateHeaderLabel()
         setupImage()
@@ -64,15 +63,20 @@ class ChangeProfileVC: UIViewController {
         view.layer.removeAllAnimations()
     }
     
-    // MARK: - UI
-    func animateHeaderLabel() {
+    // MARK: - Helpers
+    private func configureUI() {
+        view.backgroundColor = UIColor.StandardDarkMode
+        configureSmallNavBar(withTitle: "Profile".localized())
+    }
+    
+    private func animateHeaderLabel() {
         headerLabel.alpha = 0.25
         UIView.animate(withDuration: 1, delay: 0, options: [.repeat, .autoreverse, .beginFromCurrentState]) {
             self.headerLabel.alpha = 1
         }
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         view.addSubviews(headerLabel, profileImageButton, nameLabel, totalStatsView.view)
         
         headerLabel.center(to: view, by: .centerX)
@@ -94,19 +98,19 @@ class ChangeProfileVC: UIViewController {
         totalStatsView.view.setDimension(width: view.widthAnchor)
     }
     
-    func setupName() {
+    private func setupName() {
         guard let name = UserDefaults.standard.string(forKey: nameUDKey) else { nameLabel.text = "Your Name".localized(); return }
         nameLabel.text = name
     }
     
-    func setupImage() {
+    private func setupImage() {
         guard let imageData = UserDefaults.standard.data(forKey: imageUDKey) else {
             return
         }
         profileImageButton.setImage(UIImage(data: imageData)?.withRenderingMode(.alwaysOriginal), for: .normal)
     }
     
-    func saveImage(_ image: UIImage) {
+    private func saveImage(_ image: UIImage) {
         if let imageData = image.jpegData(compressionQuality: 0.5) {
             UserDefaults.standard.setValue(imageData, forKey: imageUDKey)
             NotificationCenter.default.post(name: Notification.Name.didChangeImage, object: nil, userInfo: ["newImage": imageData])
@@ -124,7 +128,7 @@ class ChangeProfileVC: UIViewController {
         }
     }
     
-    func openCameraSelection(forSelection selection: UIImagePickerController.SourceType) {
+    private func openCameraSelection(forSelection selection: UIImagePickerController.SourceType) {
         let picker = UIImagePickerController()
         picker.allowsEditing = true
         picker.sourceType = selection

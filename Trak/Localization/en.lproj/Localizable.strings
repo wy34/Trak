@@ -106,7 +106,7 @@
 "Save Error" = "Save Error";
 "OK" = "OK";
 "Saved" = "Saved";
-"Your route snapshot has been downloaded to your photo library!" = "TYour route snapshot has been downloaded to your photo library!";
+"Your route snapshot has been downloaded to your photo library!" = "Your route snapshot has been downloaded to your photo library!";
 "Camera Options" = "Camera Options";
 
 // HistoryVC
@@ -132,7 +132,7 @@
 "Measure" = "Measure";
 "Easy" = "Easy";
 "Allow Your Location" = "Allow Your Location";
-"Trak is an application that allows you to measure common, distance-related activites." = "TTrak is an application that allows you to measure common, distance-related activites.";
+"Trak is an application that allows you to measure common, distance-related activites." = "Trak is an application that allows you to measure common, distance-related activites.";
 "Whether you are exercising or just driving around, Trak records how far and how long you've travelled." = "Whether you are exercising or just driving around, Trak records how far and how long you've travelled.";
 "Just start a new activity, and Trak will begin recording your elapsed distance and time." = "Just start a new activity, and Trak will begin recording your elapsed distance and time.";
 

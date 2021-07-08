@@ -14,6 +14,7 @@ enum TimerStatus {
 }
 
 class ActivityTimer: NSObject {
+    // MARK: - Properties
     static let shared = ActivityTimer()
     private var activeTimer: Timer?
     private var pausedTimer: Timer?
@@ -33,7 +34,8 @@ class ActivityTimer: NSObject {
         return hours == 0 ? String(format: "%2d:%02d", minutes, seconds) : String(format: "%2d:%02d:%02d", hours, minutes, seconds)
     }
     
-    func runTimer() {
+    // MARK: - Helpers
+    private func runTimer() {
         pausedTimer?.invalidate()
         activeTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] (_) in
             guard let self = self else { return }

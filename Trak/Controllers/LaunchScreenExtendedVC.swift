@@ -20,8 +20,8 @@ class LaunchScreenExtendedView: UIView {
     // MARK: - Lifecycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = #colorLiteral(red: 0.2, green: 0.1882352941, blue: 0.2274509804, alpha: 1)
         configureUI()
+        layoutViews()
     }
     
     required init?(coder: NSCoder) {
@@ -29,13 +29,14 @@ class LaunchScreenExtendedView: UIView {
     }
     
     // MARK: - UI
-    func configureUI() {
+    private func configureUI() {
+        backgroundColor = #colorLiteral(red: 0.2, green: 0.1882352941, blue: 0.2274509804, alpha: 1)
         unlockBtn.isHidden = true
         unlockBtn.addTarget(self, action: #selector(authenticate), for: .touchUpInside)
         layoutViews()
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         addSubviews(imageView, unlockBtn)
         imageView.setDimension(wConst: 100, hConst: 100)
         imageView.center(x: centerXAnchor)
@@ -45,7 +46,6 @@ class LaunchScreenExtendedView: UIView {
         unlockBtn.center(to: self, by: .centerY, withMultiplierOf: 1.65)
         unlockBtn.setDimension(hConst: 45)
     }
-    
     
     // MARK: - Selector
     @objc func authenticate() {

@@ -8,11 +8,11 @@
 import UIKit
 import CoreLocation
 
-protocol LocationRequestOnboardingDelegate: class {
+protocol LocationRequestOnboardingDelegate: AnyObject {
     func dismissOnboarding()
 }
 
-protocol LocationRequestDelegate: class {
+protocol LocationRequestDelegate: AnyObject {
     func dismissLocationRequest()
 }
 
@@ -30,16 +30,16 @@ class BaseLocationRequestView: UIView {
         return iv
     }()
     
-    let letsGetStartedLabel = UILabel.createLabel(withTitle: "Let's Get Started!".localized(), textColor: UIColor(named: "InvertedDarkMode")!, font: UIFont.bold14)
-    private let permissionHeaderLabel = UILabel.createLabel(withTitle: "Allow Your Location".localized(), textColor: UIColor(named: "InvertedDarkMode")!, font: UIFont.bold25, andAlignment: .center)
+    let letsGetStartedLabel = UILabel.createLabel(withTitle: "Let's Get Started!".localized(), textColor: UIColor.InvertedDarkMode, font: UIFont.bold14)
+    private let permissionHeaderLabel = UILabel.createLabel(withTitle: "Allow Your Location".localized(), textColor: UIColor.InvertedDarkMode, font: UIFont.bold25, andAlignment: .center)
     private let permissionDescriptionLabel = UILabel.createLabel(withTitle: "Please enable location services so that we can track your activities.".localized(), textColor: .systemGray, font: UIFont.bold14, andAlignment: .center)
     
     let permissionButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Allow".localized(), for: .normal)
-        button.setTitleColor(UIColor(named: "StandardDarkMode")!, for: .normal)
+        button.setTitleColor(UIColor.StandardDarkMode, for: .normal)
         button.layer.cornerRadius = 15
-        button.backgroundColor = UIColor(named: "InvertedDarkMode")
+        button.backgroundColor = UIColor.InvertedDarkMode
         button.titleLabel?.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.bold18!)
         button.titleLabel?.adjustsFontForContentSizeCategory = true
         button.addTarget(self, action: #selector(allowLocationServices), for: .touchUpInside)
@@ -53,25 +53,25 @@ class BaseLocationRequestView: UIView {
         return stack
     }()
     
-    // MARK: - Lifecycle
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUI()
+        layoutViews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - UI
-    func configureUI(){
+    // MARK: - Helper
+    private func configureUI(){
         letsGetStartedLabel.isHidden = true
-        backgroundColor = UIColor(named: "StandardDarkMode")
+        backgroundColor = UIColor.StandardDarkMode
         permissionDescriptionLabel.numberOfLines = 0
-        layoutViews()
     }
     
-    func layoutViews() {
+    private func layoutViews() {
         addSubviews(letsGetStartedLabel, iconImageView, labelStack, permissionButton)
         
         letsGetStartedLabel.center(to: self, by: .centerX)
@@ -84,14 +84,13 @@ class BaseLocationRequestView: UIView {
         labelStack.setDimension(width: widthAnchor, wMult: 0.75)
         labelStack.center(to: iconImageView, by: .centerX)
         labelStack.center(to: self, by: .centerY, withMultiplierOf: 1.2)
-
         
         permissionButton.setDimension(width: widthAnchor, height: heightAnchor, wMult: 0.75, hMult: 0.05)
         permissionButton.center(to: self, by: .centerX)
         permissionButton.center(to: self, by: .centerY, withMultiplierOf: 1.5)
     }
     
-    // MARK: - Permission Events
+    // MARK: - Selectors
     @objc func allowLocationServices() {
         guard let locationManager = locationManager else { return }
         locationManager.delegate = self
