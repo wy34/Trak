@@ -29,6 +29,7 @@
 * User location authorization
 * Displaying user location on a map
 * Drawing polylines on map to show traveled distance
+* Persisting user data with Core Data
 * Use of timers
 * Adding Face/Touch ID functionality
 * Translating app to different languages with localization
